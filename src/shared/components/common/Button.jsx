@@ -1,5 +1,5 @@
-import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from "react-native";
-import { COLORS, SPACING, FONT_SIZE } from "../../constants/theme";
+import { TouchableOpacity, Text, StyleSheet, ActivityIndicator, View } from "react-native";
+import { COLORS, SPACING, FONT_SIZE, FONT_TYPE } from "../../constants/theme";
 
 const styles = StyleSheet.create({
     button: {
@@ -8,12 +8,24 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-        backgroundColor: COLORS.primary
+        backgroundColor: COLORS.primary,
     },
     button_Secondary: {
         backgroundColor: "transparent",
         borderWidth: 1,
         borderColor: COLORS.primary
+    },
+    content_Container: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    icon_Container: {
+        marginLeft: SPACING.sm, // 8
+    },
+    text_btn: {
+        fontSize: FONT_SIZE.md,   
+        fontWeight: "bold",       
     },
     text_Base: {
         fontSize: FONT_SIZE.md,
@@ -40,6 +52,7 @@ const Button = ({
     loading = false,
     style,
     variant = "primary",
+    icon,
     ...props    
 }) => {
     const isSecondary = variant === "secondary"
@@ -62,15 +75,18 @@ const Button = ({
                 <ActivityIndicator
                     color={isSecondary ? COLORS.surface : COLORS.text_primary}
                 />
-            ) : (
-                <Text
-                    style={[
-                    styles.text_btn,
-                    isSecondary ? styles.text_secundary : styles.text_primary
-                    ]}
-                >
-                    {title}
-                </Text>
+            ) : (                
+                <View style={styles.content_Container}>
+                    <Text
+                        style={[
+                            styles.text_btn,
+                            isSecondary ? styles.text_secundary : isOther ? styles.text_other : styles.text_primary
+                        ]}
+                    >
+                        {title}
+                    </Text>
+                    {icon && <View style={styles.icon_Container}>{icon}</View>}
+                </View>
             )
         }
         </TouchableOpacity>

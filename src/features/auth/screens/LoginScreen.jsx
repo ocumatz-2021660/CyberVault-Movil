@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {View, Text, StyleSheet,Image,KeyboardAvoidingView,Platform,ScrollView,Alert} from "react-native"
+import {ArrowRight} from "lucide-react-native"
 import { useForm, Controller } from 'react-hook-form'
 import Button from "../../../shared/components/common/Button";
 import { COLORS, SPACING, FONT_SIZE, FONT_TYPE } from "../../../shared/constants/theme";
@@ -23,10 +24,11 @@ const LoginScreen = ({navigation}) =>{
             <ScrollView>
                 <View>
                     <Button
-                        title="Register"
+                        title="Ingresar a mi cuenta"
+                        icon={<ArrowRight size={20} color={COLORS.surface} />}
                         onPress={()=> navigation.navigate("Register")}
-                        style={styles.button}
-                    />
+                        style={styles.button}                        
+                    />                      
                 </View>
             </ScrollView>
 
