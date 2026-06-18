@@ -4,7 +4,7 @@ import { COLORS, SPACING, FONT_SIZE, FONT_TYPE } from "../../constants/theme";
 const styles = StyleSheet.create({
     button: {
         paddingVertical: SPACING.md, // (16)
-        borderRadius: SPACING.xl, //(32)
+        borderRadius: SPACING.sm, //(32)
         alignItems: "center",
         justifyContent: "center",
         width: "100%",

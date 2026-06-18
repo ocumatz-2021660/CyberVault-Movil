@@ -28,6 +28,7 @@ export const COLORS = {
     background: "#f5f7fa",
     surface: "#ffffff",
     border: "#e2e8f0",
+    error: "#ff0000",
 }
 
 export const FONT_TYPE = {
@@ -47,9 +48,15 @@ export const SHADOWS = {
     },
     md: {
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: { top: 1, bottom: 1, right: 1, left: 1 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
     },
+    error: {
+        shadowColor: COLORS.primary,
+        shadowOffset: {width: 0, height: 3},
+        shadowOpacity: 0.15,
+        elevation: 8,
+    }
 };
