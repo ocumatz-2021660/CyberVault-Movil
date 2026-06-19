@@ -83,6 +83,14 @@ const LoginScreen = ({ navigation }) => {
             alignSelf: "flex-end",
             maginBotton: -SPACING.xl,
         },
+        copyrightText: {
+            fontSize: FONT_SIZE.xs,
+            color: COLORS.text_secondary,
+            textAlign: "center",
+            marginTop: SPACING.xl,
+            paddingHorizontal: SPACING.md,
+            width: "100%",
+        },
     });
     return (
         <KeyboardAvoidingView
@@ -120,7 +128,7 @@ const LoginScreen = ({ navigation }) => {
                     />
                     <Text
                         style={styles.forgotLink}
-                        onPress={()=> navigation.navigate("ForgotPassword")}
+                        onPress={() => navigation.navigate("ForgotPassword")}
                     >
                         ¿OLVIDÓ SU CLAVE?
                     </Text>
@@ -146,11 +154,14 @@ const LoginScreen = ({ navigation }) => {
                         onPress={handleSubmit(onSubmit)}
                         style={styles.button}
                     />
+                    <View style={styles.footer}>
+                        <Text style={styles.footerText}>¿No tienes cuenta?
+                            <Text style={styles.link}>Afilicie hoy mismo</Text>
+                        </Text>
+                    </View>
                 </View>
                 <View style={styles.footer}>
-                    <Text style={styles.footerText}>¿No tienes cuenta?
-                        <Text style={styles.link}>Afilicie hoy mismo</Text>
-                    </Text>
+                    <Text style={styles.copyrightText}>© 2026 CyberVault — Todos los derechos reservados</Text>
                 </View>
             </ScrollView>
 
