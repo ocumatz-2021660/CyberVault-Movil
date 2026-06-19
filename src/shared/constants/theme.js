@@ -29,6 +29,7 @@ export const COLORS = {
     surface: "#ffffff",
     border: "#e2e8f0",
     error: "#ff0000",
+    light_error: "#fad2d2"
 }
 
 export const FONT_TYPE = {
