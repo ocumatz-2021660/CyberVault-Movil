@@ -2,11 +2,11 @@ import { useState } from "react";
 import { TextInput, View, Text, StyleSheet } from "react-native";
 import { COLORS, SPACING, FONT_TYPE, FONT_SIZE, SHADOWS } from "../../constants/theme";
 
-const Input = ({label, error, icon, ...props})=>{
+const Input = ({ label, error, icon, ...props }) => {
 
     const [isFocused, setIsFocused] = useState(false);
     const styles = StyleSheet.create({
-    
+
         container: {
             marginBottom: SPACING.md,
             width: "100%",
@@ -15,10 +15,10 @@ const Input = ({label, error, icon, ...props})=>{
             fontSize: FONT_SIZE.sm,
             fontWeight: "600",
             color: COLORS.text_secondary,
-            marginBottom: SPACING.xs,  
-            
+            marginBottom: SPACING.xs,
+
         },
-        inputContainer:{
+        inputContainer: {
             flexDirection: "row",
             alignItems: "center",
             backgroundColor: COLORS.surface,
@@ -26,7 +26,7 @@ const Input = ({label, error, icon, ...props})=>{
             borderColor: COLORS.border,
             borderRadius: 8,
             paddingHorizontal: SPACING.md,
-            
+
         },
         input: {
             flex: 1,
@@ -35,13 +35,13 @@ const Input = ({label, error, icon, ...props})=>{
             color: COLORS.text_secondary,
             outlineStyle: "none",
         },
-        icon:{
+        icon: {
             marginRight: SPACING.sm,
             justifyContent: "center",
             alignItems: "center",
         },
         inputFocused: {
-            borderColor: COLORS.primary, 
+            borderColor: COLORS.primary,
         },
         inputError: {
             borderColor: COLORS.primary_dark,
@@ -52,12 +52,12 @@ const Input = ({label, error, icon, ...props})=>{
             fontSize: FONT_SIZE.xs,
             fontWeight: "700",
             marginTop: SPACING.xs,
-        },        
+        },
     });
 
-    return(
+    return (
         <View
-            style={styles.container}    
+            style={styles.container}
         >
             {label && <Text style={styles.label}>{label}</Text>}
             <View style={[styles.inputContainer, !!error && styles.inputError]}>
@@ -72,15 +72,15 @@ const Input = ({label, error, icon, ...props})=>{
                     underlineColorAndroid="transparent"
                     onFocus={(e) => {
                         setIsFocused(true);
-                        if (onFocus) onFocus(e);
+                        if (props.onFocus) props.onFocus(e); // 🌟 Cambiado a props.onFocus
                     }}
                     onBlur={(e) => {
                         setIsFocused(false);
-                        if (onBlur) onBlur(e);
+                        if (props.onBlur) props.onBlur(e);   // 🌟 Cambiado a props.onBlur
                     }}
                     {...props}
                 />
-            </View>            
+            </View>
             {!!error && <Text style={styles.textError}>{error}</Text>}
         </View>
     );

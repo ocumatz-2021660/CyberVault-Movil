@@ -134,6 +134,7 @@ const LoginScreen = ({ navigation }) => {
                                 value={value}
                                 onChangeText={onChange}
                                 error={errors.password?.message}
+                                secureTextEntry
                                 icon={<Lock size={15} color={COLORS.primary_dark} />}
                             />
                         )}
