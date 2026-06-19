@@ -1,21 +1,20 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Platform, ScrollView, Alert } from "react-native"
-import { ArrowRight, Mail, Subtitles, Wallet, Lock } from "lucide-react-native"
+import React, { useState } from "react"
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Alert } from "react-native"
 import { useForm, Controller } from 'react-hook-form'
-import Button from "../../../shared/components/common/Button";
-import Input from "../../../shared/components/common/Input";
-import { COLORS, SPACING, FONT_SIZE, FONT_TYPE } from "../../../shared/constants/theme";
+import { COLORS, SPACING, FONT_SIZE, FONT_TYPE, SHADOWS } from '../../../shared/constants/theme';
+import Input from '../../../shared/components/common/Input';
+import Button from '../../../shared/components/common/Button';
+import { ArrowRight, ArrowLeft, Mail, ShieldAlert } from "lucide-react-native"
 
 
-const LoginScreen = ({ navigation }) => {
+const ForgotPasswordScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            emailOrUsername: '',
-            password: ''
+            forgotPassword: "",
         }
     });
-
     const onSubmit = async (data) => {
+
     }
 
     const styles = StyleSheet.create({
@@ -36,9 +35,9 @@ const LoginScreen = ({ navigation }) => {
         logo: {
             padding: 15,
             maginBotton: SPACING.sm,
-            color: COLORS.surface,
-            backgroundColor: COLORS.primary,
-            borderRadius: 15,
+            color: COLORS.error,
+            backgroundColor: COLORS.light_error,
+            borderRadius: 20,
         },
         subtitle: {
             fontSize: FONT_SIZE.lg,
@@ -92,10 +91,10 @@ const LoginScreen = ({ navigation }) => {
             <ScrollView contentContainerStyle={styles.scrollContent}>
 
                 <View style={styles.header}>
-                    <Wallet style={styles.logo} size={40} />
+                    <ShieldAlert style={styles.logo} size={40} />
                     <View>
-                        <Text style={[styles.subtitle, { color: COLORS.text_primary }]}>CYBER
-                            <Text style={[styles.subtitle, { color: COLORS.primary }]}>VAULT</Text>
+                        <Text style={[styles.subtitle, { color: COLORS.text_primary }]}>RECUPERAR
+                            <Text style={[styles.subtitle, { color: COLORS.primary }]}> CLAVE</Text>
                         </Text>
                     </View>
                     <Text style={styles.label}>BANCA DIGITAL INSTITUCIONAL</Text>
@@ -104,53 +103,34 @@ const LoginScreen = ({ navigation }) => {
                 <View style={styles.form}>
                     <Controller
                         control={control}
-                        rules={{ required: "Este campo es obligatorio" }}
+                        rules={{ required: "El correo es nesesario" }}
                         render={({ field: { onChange, value } }) => (
                             <Input
-                                label="USUARIO O CORREO"
-                                placeholder="Ej. usuario123"
+                                label="CORREO ELECTRÓNICO"
+                                placeholder="Ej. ejemplo@correo.com"
                                 value={value}
                                 onChangeText={onChange}
-                                error={errors.emailOrUsername?.message}
+                                error={errors.forgotPassword?.message}
                                 icon={<Mail size={15} color={COLORS.primary_dark} />}
 
                             />
                         )}
-                        name="emailOrUsername"
-                    />
-                    <Text
-                        style={styles.forgotLink}
-                        onPress={()=> navigation.navigate("ForgotPassword")}
-                    >
-                        ¿OLVIDÓ SU CLAVE?
-                    </Text>
-                    <Controller
-                        control={control}
-                        rules={{ required: "La contraseña es obligatoria" }}
-                        render={({ field: { onChange, value } }) => (
-                            <Input
-                                lable="CONTRASEÑA"
-                                placeholder="••••••••••••••"
-                                value={value}
-                                onChangeText={onChange}
-                                error={errors.password?.message}
-                                secureTextEntry
-                                icon={<Lock size={15} color={COLORS.primary_dark} />}
-                            />
-                        )}
-                        name="password"
+                        name="forgotPassword"
                     />
                     <Button
-                        title="Ingresar a mi cuenta"
+                        title="Enviar Instrucciones"
                         icon={<ArrowRight size={20} color={COLORS.surface} />}
                         onPress={handleSubmit(onSubmit)}
                         style={styles.button}
                     />
-                </View>
-                <View style={styles.footer}>
-                    <Text style={styles.footerText}>¿No tienes cuenta?
-                        <Text style={styles.link}>Afilicie hoy mismo</Text>
-                    </Text>
+                    <View style={styles.footer}>
+                        <ArrowLeft size={25} color={COLORS.primary_dark}/>
+                        <Text 
+                            style={styles.link}
+                            onPress={()=> navigation.navigate("Login")}
+                        >Volver al inicio de sesión</Text>
+                        
+                    </View>
                 </View>
             </ScrollView>
 
@@ -158,5 +138,4 @@ const LoginScreen = ({ navigation }) => {
     )
 }
 
-
-export default LoginScreen;
+export default ForgotPasswordScreen;
