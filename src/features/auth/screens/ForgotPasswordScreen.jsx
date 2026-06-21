@@ -120,7 +120,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
                     <Button
                         title="Enviar Instrucciones"
                         icon={<ArrowRight size={20} color={COLORS.surface} />}
-                        onPress={handleSubmit(onSubmit)}
+                        onPress={()=> navigation.navigate("ResetPassword")}
                         style={styles.button}
                     />
                     <View style={styles.footer}>
