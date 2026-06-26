@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     button_Secondary: {
         backgroundColor: "transparent",
         borderWidth: 1,
-        borderColor: COLORS.primary
+        borderColor: COLORS.text_secondary
     },
     content_Container: {
         flexDirection: "row",
