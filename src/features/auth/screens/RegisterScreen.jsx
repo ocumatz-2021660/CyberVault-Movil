@@ -380,7 +380,7 @@ const RegisterScreen = ({ navigation }) => {
                         <Button
                             title="Finalizar Afiliación"
                             icon={<ChevronRight size={18} color={COLORS.surface} />}
-                            onPress={handleSubmit(onSubmit)}
+                            onPress={()=> navigation.navigate("VerifyEmail")}
                             style={styles.buttonSubmit}
                         />
                     </View>
