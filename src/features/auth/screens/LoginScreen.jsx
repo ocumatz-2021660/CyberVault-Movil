@@ -156,7 +156,10 @@ const LoginScreen = ({ navigation }) => {
                     />
                     <View style={styles.footer}>
                         <Text style={styles.footerText}>¿No tienes cuenta?
-                            <Text style={styles.link}>Afilicie hoy mismo</Text>
+                            <Text 
+                                style={styles.link}
+                                onPress={() => navigation.navigate("Register")}
+                            >Afilicie hoy mismo</Text>
                         </Text>
                     </View>
                 </View>
