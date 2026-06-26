@@ -51,7 +51,7 @@ export const SHADOWS = {
     md: {
         shadowColor: "#000",
         shadowOffset: { top: 1, bottom: 1, right: 1, left: 1 },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.5,
         shadowRadius: 3.84,
         elevation: 5,
     },
@@ -60,5 +60,12 @@ export const SHADOWS = {
         shadowOffset: {width: 0, height: 3},
         shadowOpacity: 0.15,
         elevation: 8,
+    },
+    containerCard: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 12 },
+        shadowOpacity: 0.22,
+        shadowRadius: 16.00,
+        elevation: 24,
     }
 };
