@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Image,  Alert, } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import Input from "../../../shared/components/common/Input";
 import Button from "../../../shared/components/common/Button";
 import { COLORS, FONT_TYPE, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme";
-import { ArrowLeft, Camera, ShieldCheck, ChevronRight, User } from "lucide-react-native";
+import { ArrowLeft, Camera, ShieldCheck, ChevronRight, User} from "lucide-react-native";
+import { useAuth } from "../../../features/auth/hooks/useAuth";
 
 const RegisterScreen = ({ navigation }) => {
 
+    const { handleRegister, loading } = useAuth();
     const [imageUri, setImageUri] = useState(null);
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm({
@@ -23,11 +25,25 @@ const RegisterScreen = ({ navigation }) => {
     });
 
     const handleSelectImage = () => {
-        alert("Aquí puedes integrar expo-image-picker o react-native-image-picker para seleccionar tu foto.");
+        Alert.Alert("Aquí puedes integrar expo-image-picker o react-native-image-picker para seleccionar tu foto.");
     };
 
     const onSubmit = async (data) => {
-        console.log("Datos de afiliación: ", { ...data, userPicture: imageUri });
+        try {
+            const formData = new FormData();
+            formData.append("name", data.firstName);
+            formData.append("surname", data.lastName);
+            formData.append("username", data.userName);
+            formData.append("email", data.userEmail);
+            formData.append("password", data.userPassword);
+            formData.append("confirmPassword", data.confirmPassword);
+            formData.append("phone", data.userCel);
+            await handleRegister(formData);
+            Alert.alert("Éxito", "Registro exitoso. Revisa tu correo para verificar tu cuenta.");
+            navigation.navigate("VerifyEmail");
+        } catch (error) {
+            Alert.alert("Error", error.response?.data?.message || "Error al registrarse");
+        }
     };
 
     const styles = StyleSheet.create({
@@ -380,7 +396,7 @@ const RegisterScreen = ({ navigation }) => {
                         <Button
                             title="Finalizar Afiliación"
                             icon={<ChevronRight size={18} color={COLORS.surface} />}
-                            onPress={()=> navigation.navigate("VerifyEmail")}
+                            onPress={handleSubmit(onSubmit)}
                             style={styles.buttonSubmit}
                         />
                     </View>

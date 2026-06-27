@@ -5,7 +5,7 @@ import { COLORS, SPACING, FONT_SIZE, FONT_TYPE, SHADOWS } from '../../../shared/
 import Input from '../../../shared/components/common/Input';
 import Button from '../../../shared/components/common/Button';
 import { ArrowRight, ArrowLeft, Mail, ShieldAlert } from "lucide-react-native"
-
+import { useAuth } from "../hooks/useAuth";
 
 const ForgotPasswordScreen = ({ navigation }) => {
     const { control, handleSubmit, formState: { errors } } = useForm({
@@ -13,9 +13,18 @@ const ForgotPasswordScreen = ({ navigation }) => {
             forgotPassword: "",
         }
     });
-    const onSubmit = async (data) => {
 
-    }
+    const { handleForgotPassword, loading } = useAuth();
+    
+    const onSubmit = async (data) => {
+        try {
+            await handleForgotPassword(data.forgotPassword);
+            Alert.alert("Enviado", "Si el email existe, recibirás instrucciones.");
+            navigation.navigate("ResetPassword");
+        } catch (error) {
+            Alert.alert("Error", error.response?.data?.message || "Error al enviar");
+        }
+    };
 
     const styles = StyleSheet.create({
         container: {
@@ -120,16 +129,16 @@ const ForgotPasswordScreen = ({ navigation }) => {
                     <Button
                         title="Enviar Instrucciones"
                         icon={<ArrowRight size={20} color={COLORS.surface} />}
-                        onPress={()=> navigation.navigate("ResetPassword")}
+                        onPress={handleSubmit(onSubmit)}
                         style={styles.button}
                     />
                     <View style={styles.footer}>
-                        <ArrowLeft size={25} color={COLORS.primary_dark}/>
-                        <Text 
+                        <ArrowLeft size={25} color={COLORS.primary_dark} />
+                        <Text
                             style={styles.link}
-                            onPress={()=> navigation.navigate("Login")}
+                            onPress={() => navigation.navigate("Login")}
                         >Volver al inicio de sesión</Text>
-                        
+
                     </View>
                 </View>
             </ScrollView>

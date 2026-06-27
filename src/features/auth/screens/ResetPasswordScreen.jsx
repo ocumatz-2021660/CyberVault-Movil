@@ -5,6 +5,7 @@ import { ArrowRight, Mail, Subtitles, Wallet, Lock, LockKeyhole, Key } from "luc
 import { COLORS, FONT_SIZE, FONT_TYPE, SHADOWS, SPACING } from "../../../shared/constants/theme"
 import Input from "../../../shared/components/common/Input"
 import Button from "../../../shared/components/common/Button"
+import { useAuth } from "../hooks/useAuth"
 
 const ResetPasswordScreen = ({ navigation }) => {
     //configurando el estado de los inputs, control es un intermediario para el input y el controller
@@ -15,10 +16,18 @@ const ResetPasswordScreen = ({ navigation }) => {
             confirmNewPassword: "",
         }
     });
-    //para subir la informacion, los datos
-    const onSubmit = async (data) => {
 
-    }
+    const { handleResetPassword, loading } = useAuth();
+
+    const onSubmit = async (data) => {
+        try {
+            await handleResetPassword(data.tokenInput, data.newPassword);
+            Alert.alert("Éxito", "Contraseña actualizada. Inicia sesión.");
+            navigation.navigate("Login");
+        } catch (error) {
+            Alert.alert("Error", error.response?.data?.message || "Error al restablecer");
+        }
+    };
 
     const styles = StyleSheet.create({
         container: {
@@ -127,7 +136,7 @@ const ResetPasswordScreen = ({ navigation }) => {
                     />
                     <Controller
                         control={control}
-                        rules={{ required: "REQUERIDO",  }}
+                        rules={{ required: "REQUERIDO", }}
                         render={({ field: { onChange, value } }) => (
                             <Input
                                 lable="NUEVA CONTRASEÑA"
@@ -148,7 +157,7 @@ const ResetPasswordScreen = ({ navigation }) => {
                             validate: (value) =>
                                 value === watch('newPassword') || 'NO COINCIDEN'
                         }}
-                        render={({field: {onChange, value}})=>(
+                        render={({ field: { onChange, value } }) => (
                             <Input
                                 label="CONFIRMAR CONTRASEÑA"
                                 placeholder="••••••••••"
@@ -156,15 +165,15 @@ const ResetPasswordScreen = ({ navigation }) => {
                                 secureTextEntry
                                 onChangeText={onChange}
                                 error={errors.confirmNewPassword?.message}
-                                icon={<Lock size={15} color={COLORS.primary_dark}/>}
-                                
+                                icon={<Lock size={15} color={COLORS.primary_dark} />}
+
                             />
                         )}
                         name="confirmNewPassword"
                     />
                     <Button
                         title="Actualizar Contraseña"
-                        icon={<ArrowRight size={20} color={COLORS.surface}/>}
+                        icon={<ArrowRight size={20} color={COLORS.surface} />}
                         onPress={handleSubmit(onSubmit)}
                         //onPress={()=> navigation.navigate("Login")}
                         style={styles.button}

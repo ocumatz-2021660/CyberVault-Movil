@@ -5,8 +5,9 @@ import { ArrowRight, MailCheck, Key } from "lucide-react-native"
 import Button from "../../../shared/components/common/Button";
 import Input from "../../../shared/components/common/Input";
 import { COLORS, SHADOWS, FONT_SIZE, FONT_TYPE, SPACING } from "../../../shared/constants/theme"
+import { useAuth } from "../hooks/useAuth";
 
-const VerifyEmailScreen = ({ navigate }) => {
+const VerifyEmailScreen = ({ navigation }) => {
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -14,9 +15,17 @@ const VerifyEmailScreen = ({ navigate }) => {
         }
     });
 
-    const onSubmit = async (data) => {
+    const { handleVerifyEmail, loading } = useAuth();
 
-    }
+    const onSubmit = async (data) => {
+        try {
+            await handleVerifyEmail(data.tockenVerify);
+            Alert.alert("Éxito", "Email verificado. Ya puedes iniciar sesión.");
+            navigation.navigate("Login");
+        } catch (error) {
+            Alert.alert("Error", error.response?.data?.message || "Token inválido");
+        }
+    };
 
     const styles = StyleSheet.create({
         container: {
@@ -131,7 +140,7 @@ const VerifyEmailScreen = ({ navigate }) => {
                     <Button
                         title="Verificar correo"
                         icon={<ArrowRight size={20} color={COLORS.surface} />}
-                        onPress={()=> navigation.navigate("Login")}
+                        onPress={handleSubmit(onSubmit)}
                         style={styles.button}
                     />
                     <View style={styles.footer}>

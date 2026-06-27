@@ -5,17 +5,25 @@ import { useForm, Controller } from 'react-hook-form'
 import Button from "../../../shared/components/common/Button";
 import Input from "../../../shared/components/common/Input";
 import { COLORS, SPACING, FONT_SIZE, FONT_TYPE } from "../../../shared/constants/theme";
-
+import { useAuth } from "../hooks/useAuth";
 
 const LoginScreen = ({ navigation }) => {
+
+    const { handleLogin, loading } = useAuth();
+
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             emailOrUsername: '',
             password: ''
         }
     });
-
+    
     const onSubmit = async (data) => {
+        try {
+            await handleLogin(data);
+        } catch (error) {
+            Alert.alert("Error", error.response?.data?.message || "Credenciales inválidas");
+        }
     }
 
     const styles = StyleSheet.create({
@@ -156,7 +164,7 @@ const LoginScreen = ({ navigation }) => {
                     />
                     <View style={styles.footer}>
                         <Text style={styles.footerText}>¿No tienes cuenta?
-                            <Text 
+                            <Text
                                 style={styles.link}
                                 onPress={() => navigation.navigate("Register")}
                             >Afilicie hoy mismo</Text>
