@@ -30,7 +30,8 @@ export const COLORS = {
     border: "#e2e8f0",
     error: "#ff0000",
     light_error: "#fad2d2",
-    light_primary: "#cbedde"
+    light_primary: "#cbedde",
+    primary_green: "#00d466"
 }
 
 export const FONT_TYPE = {
