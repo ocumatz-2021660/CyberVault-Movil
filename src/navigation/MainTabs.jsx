@@ -4,20 +4,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS, SPACING, FONT_SIZE } from "../shared/constants/theme";
 import { useAuthStore } from "../shared/store/authStore";
+import DashboardAccountScreen from "../features/account/screens/DashboardAccountScreen";
 import { useAuth } from "../features/auth/hooks/useAuth";
 
 const Tab = createBottomTabNavigator();
 
-const DashboardScreen = () => {
-    const user = useAuthStore((state) => state.user);
-    return (
-        <View style={styles.centerScreen}>
-            <MaterialIcons name="account-balance" size={60} color={COLORS.primary} />
-            <Text style={styles.welcomeTitle}>Bienvenido, {user?.username}</Text>
-            <Text style={styles.welcomeSub}>Banca Digital CyberVault</Text>
-        </View>
-    );
-};
 
 const ProfileScreen = () => {
     const user = useAuthStore((state) => state.user);
@@ -57,7 +48,7 @@ const MainTabs = () => {
                 },
             })}
         >
-            <Tab.Screen name="Dashboard" component={DashboardScreen} options={{ title: "Inicio" }} />
+            <Tab.Screen name="Dashboard" component={DashboardAccountScreen} options={{ title: "Inicio", headerShown: true }} />
             <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: "Perfil", headerShown: true }} />
         </Tab.Navigator>
     );
