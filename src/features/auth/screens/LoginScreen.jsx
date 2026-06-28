@@ -4,7 +4,7 @@ import { ArrowRight, Mail, Subtitles, Wallet, Lock } from "lucide-react-native"
 import { useForm, Controller } from 'react-hook-form'
 import Button from "../../../shared/components/common/Button";
 import Input from "../../../shared/components/common/Input";
-import { COLORS, SPACING, FONT_SIZE, FONT_TYPE } from "../../../shared/constants/theme";
+import { COLORS, SPACING, FONT_SIZE, FONT_TYPE, SHADOWS} from "../../../shared/constants/theme";
 import { useAuth } from "../hooks/useAuth";
 
 const LoginScreen = ({ navigation }) => {
@@ -66,6 +66,7 @@ const LoginScreen = ({ navigation }) => {
             borderRadius: 15,
             borderTopWidth: 2,
             borderTopColor: COLORS.primary,
+            ...SHADOWS.containerCard,
         },
         button: {
             marginTop: SPACING.lg,

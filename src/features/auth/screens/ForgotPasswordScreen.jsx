@@ -66,6 +66,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
             borderRadius: 15,
             borderTopWidth: 2,
             borderTopColor: COLORS.primary,
+            ...SHADOWS.containerCard,
         },
         button: {
             marginTop: SPACING.lg,
