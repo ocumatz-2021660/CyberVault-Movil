@@ -76,9 +76,14 @@ const MainTabs = () => {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
-                headerShown: false,
-                tabBarActiveTintColor: COLORS.primary,
+                header: ({ navigation }) => <AppHeader navigation={navigation} />,
+                headerShown: true,
+                tabBarActiveTintColor: COLORS.primary_green,
                 tabBarInactiveTintColor: COLORS.text_secondary,
+                tabBarLabelStyle: ({ focused }) => ({
+                    fontSize: FONT_SIZE.xs,
+                    fontWeight: focused ? "700" : "400",
+                }),
                 tabBarStyle: {
                     backgroundColor: COLORS.surface,
                     borderTopWidth: 1,
@@ -88,15 +93,17 @@ const MainTabs = () => {
                     paddingTop: 4,
                 },
                 tabBarIcon: ({ color, size }) => {
-                    let iconName;
-                    if (route.name === "Dashboard") iconName = "dashboard";
-                    else if (route.name === "Profile") iconName = "person";
-                    return <MaterialIcons name={iconName} size={size} color={color} />;
+                    if (route.name === "Canjes") return <TicketCheckIcon size={size} color={color} />;
+                    else if (route.name === "Home") return <HomeIcon size={size} color={color} />;
+                    else if (route.name === "Service") return <GiftIcon size={size} color={color} />;
+                    else if (route.name === "Favorite") return <Heart size={size} color={color} />;
                 },
             })}
         >
-            <Tab.Screen name="Dashboard" component={DashboardAccountScreen} options={{ title: "Inicio", headerShown: true }} />
-            <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: "Perfil", headerShown: true }} />
+            <Tab.Screen name="Canjes" component={DashboardAccountScreen} options={{ tabBarLabel: "Canjes" }} />
+            <Tab.Screen name="Home" component={DashboardAccountScreen} options={{ tabBarLabel: "Inicio" }} />
+            <Tab.Screen name="Service" component={DashboardAccountScreen} options={{ tabBarLabel: "Servicios" }} />
+            <Tab.Screen name="Favorite" component={DashboardAccountScreen} options={{ tabBarLabel: "Favoritos" }} />
         </Tab.Navigator>
     );
 };
