@@ -18,6 +18,18 @@ const AppHeader = ({ navigation }) => {
                     <Text style={styles.currencyBadge}>{currency}</Text>
                 </View>
 
+                <TouchableOpacity
+                    onPress={() => setMenuVisible(true)}
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                >
+                    <Menu size={28} color={COLORS.text_primary} />
+                </TouchableOpacity>
+            </View>
+            <HeaderMenu
+                visible={menuVisible}
+                onClose={() => setMenuVisible(false)}
+                navigation={navigation}
+            />
         </>
     );
 };
