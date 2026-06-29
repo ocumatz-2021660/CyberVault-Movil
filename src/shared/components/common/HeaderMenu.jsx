@@ -62,4 +62,63 @@ const HeaderMenu = ({ visible, onClose, navigation }) => {
         setShowCurrencies(false);
     };
 
+    return (
+        <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}>
+            <TouchableWithoutFeedback onPress={onClose}>
+                <View style={styles.backdrop} />
+            </TouchableWithoutFeedback>
+            <Animated.View
+                style={[
+                    styles.popover,
+                    { transform: [{ scale }], opacity },
+                ]}
+            >
+                {!showCurrencies ? (
+                    <>
+                        <TouchableOpacity style={styles.menuItem} onPress={handlePerfil}>
+                            <User size={20} color={COLORS.text_primary} />
+                            <Text style={styles.menuItemText}>Perfil</Text>
+                        </TouchableOpacity>
+                        <View style={styles.divider} />
+                        <TouchableOpacity style={styles.menuItem} onPress={() => setShowCurrencies(true)}>
+                            <DollarSign size={20} color={COLORS.text_primary} />
+                            <Text style={styles.menuItemText}>Moneda: {currency}</Text>
+                            <ChevronRight size={20} color={COLORS.text_secondary} />
+                        </TouchableOpacity>
+                        <View style={styles.divider} />
+                        <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
+                            <LogOut size={20} color={COLORS.error} />
+                            <Text style={[styles.menuItemText, { color: COLORS.error }]}>Cerrar Sesión</Text>
+                        </TouchableOpacity>
+                    </>
+                ) : (
+                    <>
+                        <TouchableOpacity style={styles.menuItem} onPress={() => setShowCurrencies(false)}>
+                            <ArrowLeft size={20} color={COLORS.text_primary} />
+                            <Text style={styles.menuItemText}>Moneda</Text>
+                        </TouchableOpacity>
+                        <View style={styles.divider} />
+                        {AVAILABLE_CURRENCIES.map((c) => (
+                            <TouchableOpacity
+                                key={c.code}
+                                style={styles.menuItem}
+                                onPress={() => handleSelectCurrency(c.code)}
+                            >
+                                {currency === c.code ? (
+                                    <CircleDot size={20} color={COLORS.primary} />
+                                ) : (
+                                    <Circle size={20} color={COLORS.text_secondary} />
+                                )}
+                                <Text style={styles.menuItemText}>
+                                    {c.symbol} {c.code} - {c.name}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </>
+                )}
+            </Animated.View>
+        </Modal>
+    );
+};
+
 }
