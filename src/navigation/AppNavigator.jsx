@@ -3,6 +3,7 @@ import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { COLORS } from "../shared/constants/theme";
 import AuthStack from "./AuthStack";
 import MainTabs from "./MainTabs";
+import AppHeader from "../shared/components/common/AppHeader";
 import { useAuthStore } from "../shared/store/authStore";
 
 const AppNavigator = () => {
