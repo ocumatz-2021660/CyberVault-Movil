@@ -33,3 +33,33 @@ const AppHeader = ({ navigation }) => {
         </>
     );
 };
+
+const styles = StyleSheet.create({
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: COLORS.surface,
+        paddingHorizontal: SPACING.md,
+        paddingVertical: SPACING.sm,
+        borderBottomWidth: 1,
+        borderBottomColor: COLORS.border,
+        height: 56,
+    },
+    logoWrapper: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: SPACING.sm,
+        backgroundColor: COLORS.primary,
+        paddingHorizontal: SPACING.sm,
+        paddingVertical: SPACING.xs,
+        borderRadius: 15,
+    },
+    currencyBadge: {
+        fontSize: FONT_SIZE.sm,
+        fontWeight: "600",
+        color: COLORS.surface,
+    },
+});
+
+export default AppHeader;
