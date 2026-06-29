@@ -10,3 +10,16 @@ export const AVAILABLE_CURRENCIES = [
     { code: "MXN", symbol: "MX$", name: "Peso Mexicano" },
     { code: "COP", symbol: "COL$", name: "Peso Colombiano" },
 ];
+
+export const useSettingsStore = create(
+    persist(
+        (set) => ({
+            currency: "USD",
+            setCurrency: (currency) => set({ currency }),
+        }),
+        {
+            name: "settings-storage",
+            storage: createJSONStorage(() => AsyncStorage),
+        },
+    ),
+);
