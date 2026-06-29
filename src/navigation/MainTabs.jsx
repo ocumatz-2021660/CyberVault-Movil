@@ -26,6 +26,53 @@ const ProfileScreen = () => {
 };
 
 const MainTabs = () => {
+    const styles = StyleSheet.create({
+        centerScreen: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: COLORS.background,
+            gap: SPACING.md,
+            padding: SPACING.lg,
+        },
+        welcomeTitle: {
+            fontSize: FONT_SIZE.xl,
+            fontWeight: "900",
+            color: COLORS.text_primary,
+            textAlign: "center",
+        },
+        welcomeSub: {
+            fontSize: FONT_SIZE.md,
+            color: COLORS.text_secondary,
+        },
+        profileName: {
+            fontSize: FONT_SIZE.xxl,
+            fontWeight: "900",
+            color: COLORS.text_primary,
+        },
+        profileRole: {
+            fontSize: FONT_SIZE.md,
+            color: COLORS.text_secondary,
+            backgroundColor: COLORS.light_primary,
+            paddingHorizontal: SPACING.md,
+            paddingVertical: SPACING.xs,
+            borderRadius: 20,
+            overflow: "hidden",
+        },
+        logoutBtn: {
+            marginTop: SPACING.xl,
+            backgroundColor: COLORS.error,
+            paddingHorizontal: SPACING.xl,
+            paddingVertical: SPACING.md,
+            borderRadius: 8,
+        },
+        logoutText: {
+            color: COLORS.surface,
+            fontWeight: "700",
+            fontSize: FONT_SIZE.md,
+        },
+    });
+
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -54,51 +101,5 @@ const MainTabs = () => {
     );
 };
 
-const styles = StyleSheet.create({
-    centerScreen: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: COLORS.background,
-        gap: SPACING.md,
-        padding: SPACING.lg,
-    },
-    welcomeTitle: {
-        fontSize: FONT_SIZE.xl,
-        fontWeight: "900",
-        color: COLORS.text_primary,
-        textAlign: "center",
-    },
-    welcomeSub: {
-        fontSize: FONT_SIZE.md,
-        color: COLORS.text_secondary,
-    },
-    profileName: {
-        fontSize: FONT_SIZE.xxl,
-        fontWeight: "900",
-        color: COLORS.text_primary,
-    },
-    profileRole: {
-        fontSize: FONT_SIZE.md,
-        color: COLORS.text_secondary,
-        backgroundColor: COLORS.light_primary,
-        paddingHorizontal: SPACING.md,
-        paddingVertical: SPACING.xs,
-        borderRadius: 20,
-        overflow: "hidden",
-    },
-    logoutBtn: {
-        marginTop: SPACING.xl,
-        backgroundColor: COLORS.error,
-        paddingHorizontal: SPACING.xl,
-        paddingVertical: SPACING.md,
-        borderRadius: 8,
-    },
-    logoutText: {
-        color: COLORS.surface,
-        fontWeight: "700",
-        fontSize: FONT_SIZE.md,
-    },
-});
 
 export default MainTabs;
