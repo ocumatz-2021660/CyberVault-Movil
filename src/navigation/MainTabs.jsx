@@ -1,21 +1,21 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS, SPACING, FONT_SIZE } from "../shared/constants/theme";
 import { useAuthStore } from "../shared/store/authStore";
 import DashboardAccountScreen from "../features/account/screens/DashboardAccountScreen";
 import { useAuth } from "../features/auth/hooks/useAuth";
+import AppHeader from "../shared/components/common/AppHeader";
+import { LayoutDashboard, User, UserCircle, GiftIcon, TicketCheckIcon, Heart, HomeIcon } from "lucide-react-native";
 
 const Tab = createBottomTabNavigator();
-
 
 const ProfileScreen = () => {
     const user = useAuthStore((state) => state.user);
     const { logout } = useAuth();
     return (
         <View style={styles.centerScreen}>
-            <MaterialIcons name="account-circle" size={80} color={COLORS.primary} />
+            <UserCircle size={80} color={COLORS.primary} />
             <Text style={styles.profileName}>{user?.username}</Text>
             <Text style={styles.profileRole}>{user?.role}</Text>
             <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
