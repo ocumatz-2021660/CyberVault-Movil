@@ -79,18 +79,18 @@ const MainTabs = () => {
                 header: ({ navigation }) => <AppHeader navigation={navigation} />,
                 headerShown: true,
                 tabBarActiveTintColor: COLORS.primary_green,
-                tabBarInactiveTintColor: COLORS.text_secondary,
+                tabBarInactiveTintColor: COLORS.surface,
                 tabBarLabelStyle: ({ focused }) => ({
                     fontSize: FONT_SIZE.xs,
                     fontWeight: focused ? "700" : "400",
                 }),
                 tabBarStyle: {
-                    backgroundColor: COLORS.surface,
+                    backgroundColor: COLORS.primary,
                     borderTopWidth: 1,
                     borderTopColor: COLORS.border,
                     height: 60,
-                    paddingBottom: 8,
-                    paddingTop: 4,
+                    paddingBottom: 5,
+                    paddingTop: 5,
                 },
                 tabBarIcon: ({ color, size }) => {
                     if (route.name === "Canjes") return <TicketCheckIcon size={size} color={color} />;
