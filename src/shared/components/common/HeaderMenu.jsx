@@ -121,4 +121,39 @@ const HeaderMenu = ({ visible, onClose, navigation }) => {
     );
 };
 
-}
+const styles = StyleSheet.create({
+    backdrop: {
+        flex: 1,
+        backgroundColor: "rgba(0,0,0,0.3)",
+    },
+    popover: {
+        position: "absolute",
+        top: 64,
+        right: SPACING.sm,
+        width: POPOVER_WIDTH,
+        backgroundColor: COLORS.surface,
+        borderRadius: 12,
+        paddingVertical: SPACING.xs,
+        ...SHADOWS.md,
+    },
+    menuItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: SPACING.sm + 2,
+        paddingHorizontal: SPACING.md,
+        gap: SPACING.sm,
+    },
+    menuItemText: {
+        flex: 1,
+        fontSize: FONT_SIZE.md,
+        color: COLORS.text_primary,
+        fontWeight: "500",
+    },
+    divider: {
+        height: 1,
+        backgroundColor: COLORS.border,
+        marginHorizontal: SPACING.md,
+    },
+});
+
+export default HeaderMenu;
