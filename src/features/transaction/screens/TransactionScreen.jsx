@@ -10,6 +10,7 @@ import Input from "../../../shared/components/common/Input";
 import Button from "../../../shared/components/common/Button";
 import { useNavigation } from "@react-navigation/native";
 import accountClient from "../../../shared/api/accountClient";
+import { useSettingsStore } from "../../../shared/store/settingStore";
 
 const CURRENCY_SYMBOLS = { GTQ: "Q", USD: "$", EUR: "€" };
 
@@ -22,7 +23,7 @@ const TransactionScreen = () => {
     const navigation = useNavigation();
     const user = useAuthStore((state) => state.user);
     const { fetchFavoritos, crearTransaccion, loading } = useTransactions();
-
+    const currency = useSettingsStore((state) => state.currency);
     const [cuentas, setCuentas] = useState([]);
     const [favoritos, setFavoritos] = useState([]);
     const [showFavoritos, setShowFavoritos] = useState(false);
@@ -187,7 +188,7 @@ const TransactionScreen = () => {
                                                 {cuenta.tipo_cuenta === "AHORRO" ? "Ahorro" : "Monetaria"}
                                             </Text>
                                             <Text style={styles.typeBalance}>No. {cuenta.no_cuenta}</Text>
-                                            <Text style={styles.typeLabel}>{formatBalance(cuenta.saldo)}</Text>
+                                            <Text style={styles.typeLabel}>{formatBalance(cuenta.saldo, currency)}</Text>
                                         </TouchableOpacity>
                                     );
                                 })}
@@ -286,7 +287,7 @@ const TransactionScreen = () => {
                         <CheckCircle size={64} color={COLORS.primary} />
                         <Text style={styles.modalTitle}>Transferencia Exitosa</Text>
                         <Text style={styles.modalMessage}>
-                            Se transfirieron {formatBalance(successData?.data?.monto)} exitosamente.
+                            Se transfirieron {formatBalance(successData?.data?.monto, currency)} exitosamente.
                         </Text>
                         <Button title="Ir al Dashboard" onPress={handleGoBack} variant="primary" style={styles.modalButton} />
                     </View>
