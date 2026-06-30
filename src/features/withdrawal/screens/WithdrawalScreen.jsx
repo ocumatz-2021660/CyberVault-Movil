@@ -10,6 +10,7 @@ import Input from "../../../shared/components/common/Input";
 import Button from "../../../shared/components/common/Button";
 import { useNavigation } from "@react-navigation/native";
 import accountClient from "../../../shared/api/accountClient";
+import { useSettingsStore } from "../../../shared/store/settingStore";
 
 const CURRENCY_SYMBOLS = { GTQ: "Q", USD: "$", EUR: "€" };
 
@@ -22,7 +23,7 @@ const WithdrawalScreen = () => {
     const navigation = useNavigation();
     const user = useAuthStore((state) => state.user);
     const { crearRetiro, loading } = useWithdrawals();
-
+    const currency = useSettingsStore((state) => state.currency);
     const [cuentas, setCuentas] = useState([]);
     const [showSuccess, setShowSuccess] = useState(false);
     const [successData, setSuccessData] = useState(null);
@@ -150,7 +151,7 @@ const WithdrawalScreen = () => {
                                                 {cuenta.tipo_cuenta === "AHORRO" ? "Ahorro" : "Monetaria"}
                                             </Text>
                                             <Text style={styles.typeBalance}>No. {cuenta.no_cuenta}</Text>
-                                            <Text style={styles.typeLabel}>{formatBalance(cuenta.saldo)}</Text>
+                                            <Text style={styles.typeLabel}>{formatBalance(cuenta.saldo, currency)}</Text>
                                         </TouchableOpacity>
                                     );
                                 })}
@@ -207,7 +208,7 @@ const WithdrawalScreen = () => {
                         <CheckCircle size={64} color={COLORS.primary} />
                         <Text style={styles.modalTitle}>Retiro Exitoso</Text>
                         <Text style={styles.modalMessage}>
-                            Retiraste {formatBalance(successData?.data?.monto)} de tu cuenta exitosamente.
+                            Retirastes {formatBalance(successData?.data?.monto, currency)} de tu cuenta exitosamente.
                         </Text>
                         <Button title="Ir al Dashboard" onPress={handleGoBack} variant="primary" style={styles.modalButton} />
                     </View>
