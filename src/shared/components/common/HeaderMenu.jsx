@@ -49,7 +49,7 @@ const HeaderMenu = ({ visible, onClose, navigation }) => {
 
     const handlePerfil = () => {
         onClose();
-        navigation?.navigate("Profile");
+        navigation?.navigate("Home", { screen: "Profile" });
     };
 
     const handleLogout = () => {
