@@ -15,7 +15,9 @@ export const useSettingsStore = create(
     persist(
         (set) => ({
             currency: "USD",
+            exchangeRate: 1,
             setCurrency: (currency) => set({ currency }),
+            setExchangeRate: (exchangeRate) => set({ exchangeRate }),
         }),
         {
             name: "settings-storage",
