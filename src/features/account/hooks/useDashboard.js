@@ -17,7 +17,8 @@ export const useDashboard = () => {
                 throw new Error("Usuario no autenticado");
             }
             const response = await accountClient.get(`/cuentas/usuario/${userId}`);
-            return response.data.data;
+            const cuentas = response.data.data || [];
+            return cuentas.filter(c => c.isActive === true);
         } catch (err) {
             setError(err.response?.data?.message || "Error al obtener cuentas");
             throw err;
@@ -42,9 +43,19 @@ export const useDashboard = () => {
         }
     };
 
+    const fetchCrearCuenta = async ({ tipo_cuenta, saldo, alias }) => {
+        const response = await accountClient.post("/cuentas/create", {
+            tipo_cuenta,
+            saldo: saldo ? Number(saldo) : 100,
+            alias: alias || undefined,
+        });
+        return response.data;
+    };
+
     return {
         fetchMisCuentas,
         fetchServiciosActivos,
+        fetchCrearCuenta,
         loading,
         error,
     };
