@@ -220,7 +220,23 @@ const TransactionScreen = () => {
                     name="cuenta_destinatoria"
                 />
 
-
+                {favoritos.length > 0 && (
+                    <View style={styles.favoritosSection}>
+                        <TouchableOpacity style={styles.favoritosToggle} onPress={() => setShowFavoritos(!showFavoritos)}>
+                            <Text style={styles.favoritosToggleText}>Mis Favoritos ({favoritos.length})</Text>
+                            {showFavoritos ? <ChevronUp size={18} color={COLORS.primary} /> : <ChevronDown size={18} color={COLORS.primary} />}
+                        </TouchableOpacity>
+                        {showFavoritos && favoritos.map((fav) => (
+                            <TouchableOpacity key={fav._id} style={styles.favoritoItem} onPress={() => selectFavorito(fav)}>
+                                <Send size={16} color={COLORS.primary} />
+                                <View style={styles.favoritoInfo}>
+                                    <Text style={styles.favoritoAlias}>{fav.alias_favorito}</Text>
+                                    <Text style={styles.favoritoCuenta}>**** **** {fav.no_cuenta?.slice(-4)}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                )}
 
                 <Controller
                     control={control}
