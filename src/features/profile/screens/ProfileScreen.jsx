@@ -455,7 +455,7 @@ const ProfileScreen = ({ navigation }) => {
 
                         <Button
                             title="EDITAR PERFIL"
-                            icon={<Pencil size={18} color={COLORS.surface} />}
+                            icon={<Pencil size={19} color={COLORS.surface} />}
                             onPress={openEditModal}
                             style={styles.editButton}
                         />
