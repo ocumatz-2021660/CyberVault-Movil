@@ -31,7 +31,9 @@ export const COLORS = {
     error: "#ff0000",
     light_error: "#fad2d2",
     light_primary: "#cbedde",
-    primary_green: "#00d466"
+    primary_green: "#00d466",
+    primary_blue: "#2b24f3",
+    ligh_blue: "#b0c7ff",
 }
 
 export const FONT_TYPE = {
