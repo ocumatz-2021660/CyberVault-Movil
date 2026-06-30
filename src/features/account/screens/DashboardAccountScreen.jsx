@@ -391,7 +391,16 @@ const DashboardAccountScreen = () => {
                             <Text style={styles.actionLabel}>Transferir</Text>
                         </TouchableOpacity>
 
- 
+                        <TouchableOpacity
+                            style={styles.actionButton}
+                            onPress={() => navigation.navigate("Withdrawal")}
+                            activeOpacity={0.7}
+                        >
+                            <View style={[styles.actionIconContainer]}>
+                                <HandCoins size={24} color={COLORS.primary} />
+                            </View>
+                            <Text style={styles.actionLabel}>Retirar</Text>
+                        </TouchableOpacity>
 
                         <TouchableOpacity style={styles.actionButton} onPress={() => { }} activeOpacity={0.7}>
                             <View style={[styles.actionIconContainer,]}>
