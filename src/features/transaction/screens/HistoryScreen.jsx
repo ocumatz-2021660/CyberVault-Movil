@@ -378,7 +378,7 @@ const HistoryScreen = () => {
                     <ArrowLeft size={24} color={COLORS.text_primary} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Historial</Text>
-                <View style={styles.backButton} />
+                <View/>
             </View>
 
             <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
