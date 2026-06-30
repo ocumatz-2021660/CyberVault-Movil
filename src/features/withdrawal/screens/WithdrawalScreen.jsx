@@ -67,47 +67,52 @@ const WithdrawalScreen = () => {
         navigation.goBack();
     };
 
-    
-const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: COLORS.background },
-    header: {
-        flexDirection: "row", alignItems: "center", justifyContent: "space-between",
-        backgroundColor: COLORS.surface, paddingHorizontal: SPACING.md,
-        paddingVertical: SPACING.sm, borderBottomWidth: 1, borderBottomColor: COLORS.border, height: 56,
-    },
-    backButton: { width: 40, height: 40, justifyContent: "center", alignItems: "center" },
-    headerTitle: { fontSize: FONT_SIZE.lg, fontWeight: "700", color: COLORS.text_primary },
-    scrollContent: { flex: 1 },
-    scrollContainer: { padding: SPACING.md, paddingTop: SPACING.lg },
-    label: { fontSize: FONT_SIZE.sm, fontWeight: "600", color: COLORS.text_secondary, marginBottom: SPACING.sm },
-    emptyText: { color: COLORS.text_secondary, fontSize: FONT_SIZE.sm, marginBottom: SPACING.md },
-    typeRow: { flexDirection: "row", gap: SPACING.sm, marginBottom: SPACING.md },
-    typeCard: {
-        flex: 1, backgroundColor: COLORS.surface, borderRadius: SPACING.md,
-        padding: SPACING.lg, alignItems: "center", borderWidth: 2, borderColor: COLORS.light_error, ...SHADOWS.sm,
-    },
-    typeCardSelected: { borderColor: COLORS.error },
-    typeIconContainer: {
-        width: 56, height: 56, borderRadius: 28, backgroundColor: COLORS.light_error,
-        justifyContent: "center", alignItems: "center", marginBottom: SPACING.sm,
-    },
-    typeIconContainerSelected: { backgroundColor: COLORS.light_error},
-    typeLabel: { fontSize: FONT_SIZE.md, fontWeight: "700", color: COLORS.text_primary, marginBottom: 4 },
-    typeLabelSelected: { color: COLORS.error },
-    typeBalance: { fontSize: FONT_SIZE.sm, fontWeight: "600", color: COLORS.text_secondary },
-    errorText: { color: COLORS.error, fontSize: FONT_SIZE.xs, fontWeight: "700", marginBottom: SPACING.md, marginTop: -SPACING.sm },
-    errorBanner: { backgroundColor: COLORS.light_error, padding: SPACING.md, borderRadius: SPACING.sm, marginBottom: SPACING.md },
-    errorBannerText: { color: COLORS.error, fontSize: FONT_SIZE.sm, fontWeight: "600", textAlign: "center" },
-    submitButton: { marginTop: SPACING.sm, marginBottom: SPACING.xl },
-    modalOverlay: { flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center", padding: SPACING.xl },
-    modalContent: {
-        backgroundColor: COLORS.surface, borderRadius: SPACING.lg, padding: SPACING.xl,
-        alignItems: "center", width: "100%", maxWidth: 340, ...SHADOWS.md,
-    },
-    modalTitle: { fontSize: FONT_SIZE.xl, fontWeight: "800", color: COLORS.text_primary, marginTop: SPACING.lg, marginBottom: SPACING.sm },
-    modalMessage: { fontSize: FONT_SIZE.sm, color: COLORS.text_secondary, textAlign: "center", lineHeight: 22, marginBottom: SPACING.lg },
-    modalButton: { width: "100%" },
-});
+
+    const styles = StyleSheet.create({
+        container: { flex: 1, backgroundColor: COLORS.background },
+        header: {
+            flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "transparent",
+            paddingHorizontal: SPACING.md,
+            paddingVertical: SPACING.sm, borderBottomWidth: 1, borderBottomColor: COLORS.border, height: 56,
+        },
+        backButton: {
+            width: 40, height: 40, justifyContent: "center", alignItems: "center",borderRadius: 8,
+            backgroundColor: COLORS.surface,
+            borderWidth: 1,
+            borderColor: COLORS.border,
+        },
+        headerTitle: { fontSize: FONT_SIZE.lg, fontWeight: "700", color: COLORS.text_primary },
+        scrollContent: { flex: 1 },
+        scrollContainer: { padding: SPACING.md, paddingTop: SPACING.lg },
+        label: { fontSize: FONT_SIZE.sm, fontWeight: "600", color: COLORS.text_secondary, marginBottom: SPACING.sm },
+        emptyText: { color: COLORS.text_secondary, fontSize: FONT_SIZE.sm, marginBottom: SPACING.md },
+        typeRow: { flexDirection: "row", gap: SPACING.sm, marginBottom: SPACING.md },
+        typeCard: {
+            flex: 1, backgroundColor: COLORS.surface, borderRadius: SPACING.md,
+            padding: SPACING.lg, alignItems: "center", borderWidth: 2, borderColor: COLORS.light_error, ...SHADOWS.sm,
+        },
+        typeCardSelected: { borderColor: COLORS.error },
+        typeIconContainer: {
+            width: 56, height: 56, borderRadius: 28, backgroundColor: COLORS.light_error,
+            justifyContent: "center", alignItems: "center", marginBottom: SPACING.sm,
+        },
+        typeIconContainerSelected: { backgroundColor: COLORS.light_error },
+        typeLabel: { fontSize: FONT_SIZE.md, fontWeight: "700", color: COLORS.text_primary, marginBottom: 4 },
+        typeLabelSelected: { color: COLORS.error },
+        typeBalance: { fontSize: FONT_SIZE.sm, fontWeight: "600", color: COLORS.text_secondary },
+        errorText: { color: COLORS.error, fontSize: FONT_SIZE.xs, fontWeight: "700", marginBottom: SPACING.md, marginTop: -SPACING.sm },
+        errorBanner: { backgroundColor: COLORS.light_error, padding: SPACING.md, borderRadius: SPACING.sm, marginBottom: SPACING.md },
+        errorBannerText: { color: COLORS.error, fontSize: FONT_SIZE.sm, fontWeight: "600", textAlign: "center" },
+        submitButton: { marginTop: SPACING.sm, marginBottom: SPACING.xl },
+        modalOverlay: { flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center", padding: SPACING.xl },
+        modalContent: {
+            backgroundColor: COLORS.surface, borderRadius: SPACING.lg, padding: SPACING.xl,
+            alignItems: "center", width: "100%", maxWidth: 340, ...SHADOWS.md,
+        },
+        modalTitle: { fontSize: FONT_SIZE.xl, fontWeight: "800", color: COLORS.text_primary, marginTop: SPACING.lg, marginBottom: SPACING.sm },
+        modalMessage: { fontSize: FONT_SIZE.sm, color: COLORS.text_secondary, textAlign: "center", lineHeight: 22, marginBottom: SPACING.lg },
+        modalButton: { width: "100%" },
+    });
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
@@ -142,7 +147,7 @@ const styles = StyleSheet.create({
                                                 <ArrowDownCircle size={28} color={isSelected ? COLORS.error : COLORS.surface} />
                                             </View>
                                             <Text style={[styles.typeLabel, isSelected && styles.typeLabelSelected]}>
-                                                {cuenta.tipo_cuenta === "AHORRO" ? "Ahorro" : "Monetaria"}                                                
+                                                {cuenta.tipo_cuenta === "AHORRO" ? "Ahorro" : "Monetaria"}
                                             </Text>
                                             <Text style={styles.typeBalance}>No. {cuenta.no_cuenta}</Text>
                                             <Text style={styles.typeLabel}>{formatBalance(cuenta.saldo)}</Text>
