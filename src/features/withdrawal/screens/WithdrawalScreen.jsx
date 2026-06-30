@@ -121,7 +121,7 @@ const WithdrawalScreen = () => {
                     <ArrowLeft size={24} color={COLORS.text_primary} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Retirar</Text>
-                <View style={styles.backButton} />
+                <View  />
             </View>
 
             <ScrollView style={styles.scrollContent} contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
