@@ -10,20 +10,13 @@ import Input from "../../../shared/components/common/Input";
 import Button from "../../../shared/components/common/Button";
 import { useNavigation } from "@react-navigation/native";
 import accountClient from "../../../shared/api/accountClient";
-import { useSettingsStore } from "../../../shared/store/settingStore";
-
-const CURRENCY_SYMBOLS = { GTQ: "Q", USD: "$", EUR: "€" };
-
-const formatBalance = (amount, currency = "GTQ") => {
-    const symbol = CURRENCY_SYMBOLS[currency] || "Q";
-    return `${symbol}${Number(amount).toLocaleString("es-GT", { minimumFractionDigits: 2 })}`;
-};
+import { useCurrency } from "../../../shared/hooks/useCurrency";
 
 const TransactionScreen = () => {
     const navigation = useNavigation();
     const user = useAuthStore((state) => state.user);
     const { fetchFavoritos, crearTransaccion, loading } = useTransactions();
-    const currency = useSettingsStore((state) => state.currency);
+    const { formatConverted, toBase, symbol } = useCurrency();
     const [cuentas, setCuentas] = useState([]);
     const [favoritos, setFavoritos] = useState([]);
     const [showFavoritos, setShowFavoritos] = useState(false);
@@ -60,8 +53,9 @@ const TransactionScreen = () => {
     const onSubmit = async (data) => {
         setServerError(null);
         try {
+            const montoGTQ = toBase(Number(data.monto));
             const result = await crearTransaccion({
-                monto: Number(data.monto),
+                monto: montoGTQ,
                 tipo_transaccion: "TRANSFERENCIA",
                 cuenta_origen: data.cuenta_origen,
                 cuenta_destinatoria: data.cuenta_destinatoria,
@@ -188,7 +182,7 @@ const TransactionScreen = () => {
                                                 {cuenta.tipo_cuenta === "AHORRO" ? "Ahorro" : "Monetaria"}
                                             </Text>
                                             <Text style={styles.typeBalance}>No. {cuenta.no_cuenta}</Text>
-                                            <Text style={styles.typeLabel}>{formatBalance(cuenta.saldo, currency)}</Text>
+                                            <Text style={styles.typeLabel}>{formatConverted(cuenta.saldo)}</Text>
                                         </TouchableOpacity>
                                     );
                                 })}
@@ -248,15 +242,16 @@ const TransactionScreen = () => {
                         validate: (value) => {
                             const num = Number(value);
                             if (isNaN(num) || num <= 0) return "El monto debe ser mayor que 0";
-                            if (num > 2000) return "El monto máximo por transacción es Q2,000.00";
-                            if (selectedOriginData && num > Number(selectedOriginData.saldo)) return "Fondos insuficientes";
+                            const montoGTQ = toBase(num);
+                            if (montoGTQ > 2000) return `El monto máximo por transacción es ${symbol}2,000.00`;
+                            if (selectedOriginData && montoGTQ > Number(selectedOriginData.saldo)) return "Fondos insuficientes";
                             return true;
                         },
                     }}
                     render={({ field: { onChange, value } }) => (
                         <Input
-                            label="Monto (máx. Q2,000.00)"
-                            placeholder="Q0.00"
+                            label={`Monto (máx. ${symbol}2,000.00)`}
+                            placeholder={`${symbol}0.00`}
                             value={value}
                             onChangeText={onChange}
                             keyboardType="numeric"
@@ -287,7 +282,7 @@ const TransactionScreen = () => {
                         <CheckCircle size={64} color={COLORS.primary} />
                         <Text style={styles.modalTitle}>Transferencia Exitosa</Text>
                         <Text style={styles.modalMessage}>
-                            Se transfirieron {formatBalance(successData?.data?.monto, currency)} exitosamente.
+                            Se transfirieron {formatConverted(successData?.data?.monto)} exitosamente.
                         </Text>
                         <Button title="Ir al Dashboard" onPress={handleGoBack} variant="primary" style={styles.modalButton} />
                     </View>
