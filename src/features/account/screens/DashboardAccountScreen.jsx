@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from "react"
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Platform, ActivityIndicator, TouchableOpacity } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Landmark, Send, HandCoins, PiggyBank } from "lucide-react-native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme"
 import { useAuthStore } from "../../../shared/store/authStore"
 import { useSettingsStore } from "../../../shared/store/settingStore"
 import { useDashboard } from "../hooks/useDashboard"
 import Button from "../../../shared/components/common/Button"
-
 const CURRENCY_SYMBOLS = {
     GTQ: "Q",
     USD: "$",
@@ -30,6 +29,7 @@ const DashboardAccountScreen = () => {
     const user = useAuthStore((state) => state.user);
     const currency = useSettingsStore((state) => state.currency);
     const { fetchMisCuentas, fetchServiciosActivos, loading } = useDashboard();
+    const navigation = useNavigation();
 
     const [cuentas, setCuentas] = useState([]);
     const [servicios, setServicios] = useState([]);
@@ -294,6 +294,10 @@ const DashboardAccountScreen = () => {
             color: COLORS.text_secondary,
             marginBottom: SPACING.xs,
         },
+        solicitarButton: {
+            marginTop: SPACING.md,
+        },
+
     });
 
     return (
@@ -363,11 +367,11 @@ const DashboardAccountScreen = () => {
                             </Text>
                             <Button
                                 title="Solicitar Cuentas"
-                                onPress={() => { }}
+                                onPress={() => navigation.navigate("CreateAccount")}
                                 variant="primary"
                                 style={styles.emptyButton}
-                                icon={<ArrowRight color={COLORS.surface} />}
                             />
+
                         </View>
                     )}
                 </View>
@@ -384,19 +388,28 @@ const DashboardAccountScreen = () => {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.actionButton} onPress={() => { }} activeOpacity={0.7}>
-                            <View style={[styles.actionIconContainer ]}>
+                            <View style={[styles.actionIconContainer]}>
                                 <HandCoins size={24} color={COLORS.primary} />
                             </View>
                             <Text style={styles.actionLabel}>Retirar</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.actionButton} onPress={() => { }} activeOpacity={0.7}>
-                            <View style={[styles.actionIconContainer, ]}>
+                            <View style={[styles.actionIconContainer,]}>
                                 <History size={24} color={COLORS.primary} />
                             </View>
                             <Text style={styles.actionLabel}>Historial</Text>
                         </TouchableOpacity>
                     </View>
+
+                    <Button
+                        title="Solicitar Nueva Cuenta"
+                        onPress={() => navigation.navigate("CreateAccount")}
+                        variant="primary"
+                        icon={<Plus size={20} color={COLORS.surface} />}
+                        style={styles.solicitarButton}
+                    />
+
                 </View>
 
                 {/* SECCIÓN 3: SERVICIOS */}
@@ -442,4 +455,4 @@ const DashboardAccountScreen = () => {
 }
 
 
-export default DashboardAccountScreen
+export default DashboardAccountScreen;
