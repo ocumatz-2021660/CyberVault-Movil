@@ -80,14 +80,14 @@ const MainTabs = () => {
                 },
                 tabBarIcon: ({ color, size }) => {
                     if (route.name === "Home") return <HomeIcon size={size} color={color} />;
-                    else if (route.name === "Canje") return <TicketCheckIcon size={size} color={color} />;
+                    else if (route.name === "Canjes") return <TicketCheckIcon size={size} color={color} />;
                     else if (route.name === "Service") return <GiftIcon size={size} color={color} />;
                     else if (route.name === "Favorite") return <Heart size={size} color={color} />;
                 },
             })}
         >
             <Tab.Screen name="Home" component={AccountStack} options={{ tabBarLabel: "Inicio" }} />
-            <Tab.Screen name="Canje" component={AccountStack} options={{ tabBarLabel: "Canjes" }} />
+            <Tab.Screen name="Canjes" component={AccountStack} options={{ tabBarLabel: "Canjes" }} />
             <Tab.Screen name="Service" component={AccountStack} options={{ tabBarLabel: "Servicios" }} />
             <Tab.Screen name="Favorite" component={AccountStack} options={{ tabBarLabel: "Favoritos" }} />
         </Tab.Navigator>
