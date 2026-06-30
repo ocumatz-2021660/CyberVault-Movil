@@ -11,21 +11,6 @@ import { LayoutDashboard, User, UserCircle, GiftIcon, TicketCheckIcon, Heart, Ho
 
 const Tab = createBottomTabNavigator();
 
-const ProfileScreen = () => {
-    const user = useAuthStore((state) => state.user);
-    const { logout } = useAuth();
-    return (
-        <View style={styles.centerScreen}>
-            <UserCircle size={80} color={COLORS.primary} />
-            <Text style={styles.profileName}>{user?.username}</Text>
-            <Text style={styles.profileRole}>{user?.role}</Text>
-            <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
-                <Text style={styles.logoutText}>Cerrar Sesión</Text>
-            </TouchableOpacity>
-        </View>
-    );
-};
-
 const MainTabs = () => {
     const styles = StyleSheet.create({
         centerScreen: {
