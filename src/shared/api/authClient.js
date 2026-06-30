@@ -4,9 +4,6 @@ import { ENDPOINTS } from "../constants/endpoints";
 
 const authClient = axios.create({
     baseURL: ENDPOINTS.AUTH,
-    headers: {
-        "Content-Type": "application/json",
-    },
 });
 
 authClient.interceptors.request.use(async (config) => {
