@@ -17,7 +17,7 @@ export const useTransactions = () => {
             const response = await accountClient.post("/transactions", data);
             return response.data;
         } catch (err) {
-            const message = err.response?.data?.message || "Error al realizar la transferencia";
+            const message = err.response?.data?.message || "Error para realizar la transferencia";
             setError(message);
             throw err;
         } finally {
