@@ -4,30 +4,13 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Landmark, Send, HandCoins, PiggyBank } from "lucide-react-native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme"
 import { useAuthStore } from "../../../shared/store/authStore"
-import { useSettingsStore } from "../../../shared/store/settingStore"
+import { useCurrency } from "../../../shared/hooks/useCurrency"
 import { useDashboard } from "../hooks/useDashboard"
 import Button from "../../../shared/components/common/Button"
-const CURRENCY_SYMBOLS = {
-    GTQ: "Q",
-    USD: "$",
-    EUR: "€",
-    GBP: "£",
-    MXN: "MX$",
-    COP: "COL$",
-};
-
-const formatBalance = (amount, currency) => {
-    const symbol = CURRENCY_SYMBOLS[currency] || "Q";
-    const formatted = Number(amount).toLocaleString("es-GT", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-    });
-    return `${symbol}${formatted}`;
-};
 
 const DashboardAccountScreen = () => {
     const user = useAuthStore((state) => state.user);
-    const currency = useSettingsStore((state) => state.currency);
+    const { formatConverted, loading: rateLoading } = useCurrency();
     const { fetchMisCuentas, fetchServiciosActivos, loading } = useDashboard();
     const navigation = useNavigation();
 
@@ -75,7 +58,6 @@ const DashboardAccountScreen = () => {
         if (tipo === "AHORRO") return <PiggyBank size={20} color={COLORS.primary} />;
         return <Wallet size={20} color={COLORS.primary} />;
     };
-
 
     const styles = StyleSheet.create({
         container: {
@@ -297,7 +279,6 @@ const DashboardAccountScreen = () => {
         solicitarButton: {
             marginTop: SPACING.md,
         },
-
     });
 
     return (
@@ -332,7 +313,7 @@ const DashboardAccountScreen = () => {
                             <View style={styles.totalBalanceContainer}>
                                 <Text style={styles.totalBalanceLabel}>Saldo total disponible</Text>
                                 <Text style={styles.totalBalanceValue}>
-                                    {formatBalance(totalSaldo, currency)}
+                                    {rateLoading ? "..." : formatConverted(totalSaldo)}
                                 </Text>
                             </View>
 
@@ -352,7 +333,7 @@ const DashboardAccountScreen = () => {
                                             {cuenta.no_cuenta}
                                         </Text>
                                         <Text style={styles.accountBalance}>
-                                            {formatBalance(cuenta.saldo, currency)}
+                                            {rateLoading ? "..." : formatConverted(cuenta.saldo)}
                                         </Text>
                                     </View>
                                 </View>
@@ -371,7 +352,6 @@ const DashboardAccountScreen = () => {
                                 variant="primary"
                                 style={styles.emptyButton}
                             />
-
                         </View>
                     )}
                 </View>
@@ -402,7 +382,9 @@ const DashboardAccountScreen = () => {
                             <Text style={styles.actionLabel}>Retirar</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.actionButton} onPress={() => { }} activeOpacity={0.7}>
+                        <TouchableOpacity style={styles.actionButton}
+                            onPress={() => navigation.navigate("History")}
+                            activeOpacity={0.7}>
                             <View style={[styles.actionIconContainer,]}>
                                 <History size={24} color={COLORS.primary} />
                             </View>
@@ -417,7 +399,6 @@ const DashboardAccountScreen = () => {
                         icon={<Plus size={20} color={COLORS.surface} />}
                         style={styles.solicitarButton}
                     />
-
                 </View>
 
                 {/* SECCIÓN 3: SERVICIOS */}
@@ -461,6 +442,5 @@ const DashboardAccountScreen = () => {
         </KeyboardAvoidingView>
     )
 }
-
 
 export default DashboardAccountScreen;

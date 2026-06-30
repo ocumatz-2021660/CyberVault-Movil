@@ -4,6 +4,7 @@ import DashboardAccountScreen from "../features/account/screens/DashboardAccount
 import CreateAccountScreen from "../features/account/screens/CreateAccountScreen";
 import TransactionScreen from "../features/transaction/screens/TransactionScreen"
 import WithdrawalScreen from "../features/withdrawal/screens/WithdrawalScreen";
+import HistoryScreen from "../features/transaction/screens/HistoryScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ const AccountStack = () => {
             <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
             <Stack.Screen name="Transaction" component={TransactionScreen} />
             <Stack.Screen name="Withdrawal" component={WithdrawalScreen} />
-
+            <Stack.Screen name="History" component={HistoryScreen} />
         </Stack.Navigator>
     );
 };
