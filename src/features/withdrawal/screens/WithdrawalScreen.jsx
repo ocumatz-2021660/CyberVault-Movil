@@ -73,7 +73,7 @@ const WithdrawalScreen = () => {
         header: {
             flexDirection: "row", alignItems: "center", justifyContent: "space-between", backgroundColor: "transparent",
             paddingHorizontal: SPACING.md,
-            paddingVertical: SPACING.sm, borderBottomWidth: 1, borderBottomColor: COLORS.border, height: 56,
+            paddingVertical: SPACING.sm,height: 56,
         },
         backButton: {
             width: 40, height: 40, justifyContent: "center", alignItems: "center",borderRadius: 8,
