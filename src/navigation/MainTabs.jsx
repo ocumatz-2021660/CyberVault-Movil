@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { COLORS, SPACING, FONT_SIZE } from "../shared/constants/theme";
 import { useAuthStore } from "../shared/store/authStore";
+import AccountStack from "./AccountStack";
 import DashboardAccountScreen from "../features/account/screens/DashboardAccountScreen";
 import { useAuth } from "../features/auth/hooks/useAuth";
 import AppHeader from "../shared/components/common/AppHeader";
@@ -100,13 +101,12 @@ const MainTabs = () => {
                 },
             })}
         >
-            <Tab.Screen name="Canjes" component={DashboardAccountScreen} options={{ tabBarLabel: "Canjes" }} />
-            <Tab.Screen name="Home" component={DashboardAccountScreen} options={{ tabBarLabel: "Inicio" }} />
-            <Tab.Screen name="Service" component={DashboardAccountScreen} options={{ tabBarLabel: "Servicios" }} />
-            <Tab.Screen name="Favorite" component={DashboardAccountScreen} options={{ tabBarLabel: "Favoritos" }} />
+            <Tab.Screen name="Canjes" component={AccountStack} options={{ tabBarLabel: "Canjes" }} />
+            <Tab.Screen name="Home" component={AccountStack} options={{ tabBarLabel: "Inicio" }} />
+            <Tab.Screen name="Service" component={AccountStack} options={{ tabBarLabel: "Servicios" }} />
+            <Tab.Screen name="Favorite" component={AccountStack} options={{ tabBarLabel: "Favoritos" }} />
         </Tab.Navigator>
     );
 };
 
-
-export default MainTabs;
+export default MainTabs
