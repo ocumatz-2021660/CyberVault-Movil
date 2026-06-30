@@ -88,11 +88,9 @@ const TransactionScreen = () => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            backgroundColor: COLORS.surface,
+            backgroundColor: "transparent",
             paddingHorizontal: SPACING.md,
             paddingVertical: SPACING.sm,
-            borderBottomWidth: 1,
-            borderBottomColor: COLORS.border,
             height: 56,
         },
         backButton: {
