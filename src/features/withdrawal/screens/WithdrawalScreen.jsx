@@ -10,20 +10,13 @@ import Input from "../../../shared/components/common/Input";
 import Button from "../../../shared/components/common/Button";
 import { useNavigation } from "@react-navigation/native";
 import accountClient from "../../../shared/api/accountClient";
-import { useSettingsStore } from "../../../shared/store/settingStore";
-
-const CURRENCY_SYMBOLS = { GTQ: "Q", USD: "$", EUR: "€" };
-
-const formatBalance = (amount, currency = "GTQ") => {
-    const symbol = CURRENCY_SYMBOLS[currency] || "Q";
-    return `${symbol}${Number(amount).toLocaleString("es-GT", { minimumFractionDigits: 2 })}`;
-};
+import { useCurrency } from "../../../shared/hooks/useCurrency";
 
 const WithdrawalScreen = () => {
     const navigation = useNavigation();
     const user = useAuthStore((state) => state.user);
     const { crearRetiro, loading } = useWithdrawals();
-    const currency = useSettingsStore((state) => state.currency);
+    const { formatConverted, toBase, symbol } = useCurrency();
     const [cuentas, setCuentas] = useState([]);
     const [showSuccess, setShowSuccess] = useState(false);
     const [successData, setSuccessData] = useState(null);
@@ -55,7 +48,8 @@ const WithdrawalScreen = () => {
     const onSubmit = async (data) => {
         setServerError(null);
         try {
-            const result = await crearRetiro({ no_cuenta: data.no_cuenta, monto: Number(data.monto) });
+            const montoGTQ = toBase(Number(data.monto));
+            const result = await crearRetiro({ no_cuenta: data.no_cuenta, monto: montoGTQ });
             setSuccessData(result);
             setShowSuccess(true);
         } catch (err) {
@@ -67,7 +61,6 @@ const WithdrawalScreen = () => {
         setShowSuccess(false);
         navigation.goBack();
     };
-
 
     const styles = StyleSheet.create({
         container: { flex: 1, backgroundColor: COLORS.background },
@@ -151,7 +144,7 @@ const WithdrawalScreen = () => {
                                                 {cuenta.tipo_cuenta === "AHORRO" ? "Ahorro" : "Monetaria"}
                                             </Text>
                                             <Text style={styles.typeBalance}>No. {cuenta.no_cuenta}</Text>
-                                            <Text style={styles.typeLabel}>{formatBalance(cuenta.saldo, currency)}</Text>
+                                            <Text style={styles.typeLabel}>{formatConverted(cuenta.saldo)}</Text>
                                         </TouchableOpacity>
                                     );
                                 })}
@@ -169,15 +162,16 @@ const WithdrawalScreen = () => {
                         validate: (value) => {
                             const num = Number(value);
                             if (isNaN(num) || num <= 0) return "El monto debe ser mayor que 0";
-                            if (num > 2000) return "El monto máximo por retiro es Q2,000.00";
-                            if (selectedCuenta && num > Number(selectedCuenta.saldo)) return "Fondos insuficientes";
+                            const montoGTQ = toBase(num);
+                            if (montoGTQ > 2000) return `El monto máximo por retiro es ${symbol}2,000.00`;
+                            if (selectedCuenta && montoGTQ > Number(selectedCuenta.saldo)) return "Fondos insuficientes";
                             return true;
                         },
                     }}
                     render={({ field: { onChange, value } }) => (
                         <Input
-                            label="Monto (máx. Q2,000.00)"
-                            placeholder="Q0.00"
+                            label={`Monto (máx. ${symbol}2,000.00)`}
+                            placeholder={`${symbol}0.00`}
                             value={value}
                             onChangeText={onChange}
                             keyboardType="numeric"
@@ -208,7 +202,7 @@ const WithdrawalScreen = () => {
                         <CheckCircle size={64} color={COLORS.primary} />
                         <Text style={styles.modalTitle}>Retiro Exitoso</Text>
                         <Text style={styles.modalMessage}>
-                            Retirastes {formatBalance(successData?.data?.monto, currency)} de tu cuenta exitosamente.
+                            Retirastes {formatConverted(successData?.data?.monto)} de tu cuenta exitosamente.
                         </Text>
                         <Button title="Ir al Dashboard" onPress={handleGoBack} variant="primary" style={styles.modalButton} />
                     </View>
