@@ -380,19 +380,18 @@ const DashboardAccountScreen = () => {
                 <View style={styles.sectionOption}>
                     <Text style={styles.sectionTitle}>Acciones</Text>
                     <View style={styles.actionsRow}>
-                        <TouchableOpacity style={styles.actionButton} onPress={() => { }} activeOpacity={0.7}>
+                        <TouchableOpacity
+                            style={styles.actionButton}
+                            onPress={() => navigation.navigate("Transaction")}
+                            activeOpacity={0.7}
+                        >
                             <View style={[styles.actionIconContainer,]}>
                                 <Send size={24} color={COLORS.primary} />
                             </View>
                             <Text style={styles.actionLabel}>Transferir</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.actionButton} onPress={() => { }} activeOpacity={0.7}>
-                            <View style={[styles.actionIconContainer]}>
-                                <HandCoins size={24} color={COLORS.primary} />
-                            </View>
-                            <Text style={styles.actionLabel}>Retirar</Text>
-                        </TouchableOpacity>
+ 
 
                         <TouchableOpacity style={styles.actionButton} onPress={() => { }} activeOpacity={0.7}>
                             <View style={[styles.actionIconContainer,]}>
