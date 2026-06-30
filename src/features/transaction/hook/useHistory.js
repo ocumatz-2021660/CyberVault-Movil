@@ -28,7 +28,7 @@ export const useHistory = () => {
             const response = await accountClient.delete(`/transactions/cancelar/${transactionId}`);
             return response.data;
         } catch (err) {
-            const message = err.response?.data?.message || "Error al cancelar la transacción";
+            const message = err.response?.data?.message || "No se puede cancelar la transacción";
             setError(message);
             throw err;
         } finally {
