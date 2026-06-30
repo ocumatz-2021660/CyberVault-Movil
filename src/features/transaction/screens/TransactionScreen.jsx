@@ -96,6 +96,10 @@ const TransactionScreen = () => {
         backButton: {
             width: 40,
             height: 40,
+            borderRadius: 8,
+            backgroundColor: COLORS.surface,
+            borderWidth: 1,
+            borderColor: COLORS.border,
             justifyContent: "center",
             alignItems: "center"
         },
