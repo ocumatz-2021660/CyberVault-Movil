@@ -13,6 +13,7 @@ const AccountStack = () => {
             <Stack.Screen name="DashboardAccount" component={DashboardAccountScreen} />
             <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
             <Stack.Screen name="Transaction" component={TransactionScreen} />
+            <Stack.Screen name="Withdrawal" component={WithdrawalScreen} />
 
         </Stack.Navigator>
     );
