@@ -55,6 +55,7 @@ export const useServices = () => {
     return {
         fetchServicios,
         fetchCuentas,
+        canjearServicio,
         loading,
         error,
     };
