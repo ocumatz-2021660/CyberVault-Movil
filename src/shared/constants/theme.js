@@ -34,6 +34,8 @@ export const COLORS = {
     primary_green: "#00d466",
     primary_blue: "#2b24f3",
     ligh_blue: "#b0c7ff",
+    primary_yellow: "#ffdd00",
+    light_yellow: "#feffb9cb",
 }
 
 export const FONT_TYPE = {

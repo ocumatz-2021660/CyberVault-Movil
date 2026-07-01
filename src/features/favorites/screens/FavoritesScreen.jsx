@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, ActivityIndicator } from "react-native";
-import { ArrowLeft, Heart, Trash2, CheckCircle, XCircle, Star, Send, Wallet, User} from "lucide-react-native";
+import { ArrowLeft, Heart, Trash2, CheckCircle, XCircle, Star, Send, Wallet, User } from "lucide-react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme";
@@ -148,7 +148,7 @@ const FavoritesScreen = () => {
             marginBottom: SPACING.md,
             textAlign: "center",
         },
-        
+
         actionText: {
             fontSize: FONT_SIZE.sm,
             color: COLORS.text_secondary,
@@ -237,6 +237,25 @@ const FavoritesScreen = () => {
         formContainer: {
             width: "100%",
             marginBottom: SPACING.md,
+        },
+        infoCard: {
+            backgroundColor: COLORS.light_yellow,
+            borderRadius: SPACING.lg,
+            padding: SPACING.lg,
+            borderWidth: 1,
+            borderColor: COLORS.primary_yellow,
+        },
+        infoTitle: {
+            fontSize: FONT_SIZE.md,
+            fontWeight: "700",
+            color: COLORS.primary_yellow,
+            marginBottom: SPACING.sm,
+        },
+        infoText: {
+            fontSize: FONT_SIZE.sm,
+            color: COLORS.text_secondary,
+            lineHeight: 20,
+            marginBottom: SPACING.xs,
         },
     });
 
@@ -352,7 +371,7 @@ const FavoritesScreen = () => {
                                             error={errors.no_cuenta?.message}
                                             keyboardType="number-pad"
                                             maxLength={10}
-                                            icon={<Wallet size={15} color={COLORS.text_secondary}/>}
+                                            icon={<Wallet size={15} color={COLORS.text_secondary} />}
                                         />
                                     )}
                                 />
@@ -372,7 +391,7 @@ const FavoritesScreen = () => {
                                             onBlur={onBlur}
                                             error={errors.alias_favorito?.message}
                                             maxLength={50}
-                                            icon={<User size={15} color={COLORS.text_secondary}/>}
+                                            icon={<User size={15} color={COLORS.text_secondary} />}
                                         />
                                     )}
                                 />
@@ -474,14 +493,25 @@ const FavoritesScreen = () => {
                 {loadingFavorites ? (
                     <ActivityIndicator size="large" color={COLORS.primary} style={{ marginVertical: SPACING.xl }} />
                 ) : favorites.length === 0 ? (
-                    <View style={styles.actionCard}>
-                        <Heart size={48} color={COLORS.text_secondary} style={styles.actionIcon} />
-                        <Text style={styles.actionTitle}>Sin favoritos aún</Text>
-                        <Text style={styles.actionText}>
-                            Aún no has agregado cuentas favoritas.{"\n"}Agrega una para transferencias rápidas.
-                        </Text>
-                        <Button title="Agregar favorito" onPress={openAddModal} />
-                    </View>
+                    <>
+                        <View style={styles.actionCard}>
+                            <Heart size={48} color={COLORS.text_secondary} style={styles.actionIcon} />
+                            <Text style={styles.actionTitle}>Sin favoritos aún</Text>
+                            <Text style={styles.actionText}>
+                                Aún no has agregado cuentas favoritas.{"\n"}Agrega una para transferencias rápidas.
+                            </Text>
+                            <Button title="Agregar favorito" onPress={openAddModal} />
+                        </View>
+                        <View style={styles.infoCard}>
+                            <Text style={styles.infoTitle}>¿Para qué sirven los favoritos?</Text>
+                            <Text style={styles.infoText}>
+                                Los favoritos te permiten guardar cuentas de transferencia para no tener que escribir el número cada vez que realices un envío.
+                            </Text>
+                            <Text style={styles.infoText}>
+                                Puedes agregar, eliminar y gestionar tus cuentas favoritas desde esta sección.
+                            </Text>
+                        </View>
+                    </>
                 ) : (
                     <>
                         <View style={styles.actionCard}>
