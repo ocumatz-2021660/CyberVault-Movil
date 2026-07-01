@@ -245,8 +245,11 @@ const CanjesScreen = () => {
             marginBottom: SPACING.sm,
             borderWidth: 1,
             borderColor: COLORS.border,
+            borderRightWidth: 2,
+            borderRightColor: COLORS.primary,
             flexDirection: "row",
             alignItems: "center",
+            ...SHADOWS.containerCard,
         },
         canjeCancelled: {
             opacity: 0.6,
