@@ -8,6 +8,7 @@ import HistoryScreen from "../features/transaction/screens/HistoryScreen";
 import ProfileScreen from "../features/profile/screens/ProfileScreen";
 import FavoritesScreen from "../features/favorites/screens/FavoritesScreen";
 import ServiceScreen from "../features/services/screens/ServicesScreen";
+import CanjesScreen from "../features/canje/screens/CanjeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const AccountStack = () => {
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Favorites" component={FavoritesScreen} />
             <Stack.Screen name="Services" component={ServiceScreen} />
+            <Stack.Screen name="CanjesScreen" component={CanjesScreen} />
         </Stack.Navigator>
     );
 };
