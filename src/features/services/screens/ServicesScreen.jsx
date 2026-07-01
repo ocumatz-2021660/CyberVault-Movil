@@ -161,7 +161,10 @@ const ServiceScreen = () => {
             backgroundColor: COLORS.background,
             borderRadius: SPACING.sm,
             padding: SPACING.md,
-            marginBottom: SPACING.sm,
+            marginBottom: SPACING.sm,            
+            borderRightWidth: 2,
+            borderTopColor: COLORS.primary,
+            ...SHADOWS.containerCard
         },
         serviceIconContainer: {
             width: 44,
