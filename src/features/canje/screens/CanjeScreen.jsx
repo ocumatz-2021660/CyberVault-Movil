@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, ActivityIndicator } from "react-native";
-import { ArrowLeft, Trash2, Clock, CheckCircle, XCircle, PiggyBank, Wallet, Award, Gift } from "lucide-react-native";
+import { ArrowLeft, Trash2, Clock, CheckCircle, XCircle, PiggyBank, Wallet, Star, Gift,Stars } from "lucide-react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme";
 import { useAuthStore } from "../../../shared/store/authStore";
@@ -100,8 +100,8 @@ const CanjesScreen = () => {
     };
 
     const getAccountIcon = (tipo) => {
-        if (tipo === "AHORRO") return <PiggyBank size={28} color={COLORS.primary} />;
-        return <Wallet size={28} color={COLORS.primary} />;
+        if (tipo === "AHORRO") return <PiggyBank size={28} color={COLORS.surface} />;
+        return <Wallet size={28} color={COLORS.surface} />;
     };
 
     const styles = StyleSheet.create({
@@ -159,20 +159,20 @@ const CanjesScreen = () => {
             padding: SPACING.lg,
             alignItems: "center",
             borderWidth: 2,
-            borderColor: COLORS.border,
+            borderColor: COLORS.ligh_blue,
             ...SHADOWS.containerCard,
         },
-        typeCardSelected: { borderColor: COLORS.primary },
+        typeCardSelected: { borderColor: COLORS.primary_blue },
         typeIconContainer: {
             width: 56,
             height: 56,
             borderRadius: 28,
-            backgroundColor: COLORS.light_primary,
+            backgroundColor: COLORS.ligh_blue,
             justifyContent: "center",
             alignItems: "center",
             marginBottom: SPACING.sm,
         },
-        typeIconContainerSelected: { backgroundColor: COLORS.primary },
+        typeIconContainerSelected: { backgroundColor: COLORS.ligh_blue },
         typeLabel: {
             fontSize: FONT_SIZE.md,
             fontWeight: "700",
@@ -180,7 +180,7 @@ const CanjesScreen = () => {
             marginBottom: 4
         },
         typeLabelSelected: {
-            color: COLORS.surface
+            color: COLORS.primary_blue
         },
         typeBalance: {
             fontSize: FONT_SIZE.sm,
@@ -304,7 +304,7 @@ const CanjesScreen = () => {
             width: 44,
             height: 44,
             borderRadius: 22,
-            backgroundColor: COLORS.light_error,
+            backgroundColor: "transparent",
             justifyContent: "center",
             alignItems: "center",
             marginLeft: SPACING.sm,
@@ -498,7 +498,7 @@ const CanjesScreen = () => {
                     <>
                         <View style={styles.pointsContainer}>
                             <View style={styles.pointsIconContainer}>
-                                <Award size={24} color={COLORS.primary} />
+                                <Stars size={24} fill={COLORS.primary_yellow} />
                             </View>
                             <View style={styles.pointsInfo}>
                                 <Text style={styles.pointsLabel}>Puntos disponibles</Text>
