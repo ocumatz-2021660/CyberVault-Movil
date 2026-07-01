@@ -20,7 +20,20 @@ export const useCanjes = () => {
         }
     };
 
-
+    const cancelCanje = async (canjeId) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await pointsClient.delete(`/redeem_services/cancel/${canjeId}`);
+            return response.data;
+        } catch (err) {
+            const message = err.response?.data?.message || "No se puede cancelar el canje";
+            setError(message);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return { fetchCanjes, cancelCanje, loading, error };
 };
