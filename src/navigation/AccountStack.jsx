@@ -6,6 +6,7 @@ import TransactionScreen from "../features/transaction/screens/TransactionScreen
 import WithdrawalScreen from "../features/withdrawal/screens/WithdrawalScreen";
 import HistoryScreen from "../features/transaction/screens/HistoryScreen";
 import ProfileScreen from "../features/profile/screens/ProfileScreen";
+import FavoritesScreen from "../features/favorites/screens/FavoritesScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,7 @@ const AccountStack = () => {
             <Stack.Screen name="Withdrawal" component={WithdrawalScreen} />
             <Stack.Screen name="History" component={HistoryScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Favorites" component={FavoritesScreen} />
         </Stack.Navigator>
     );
 };
