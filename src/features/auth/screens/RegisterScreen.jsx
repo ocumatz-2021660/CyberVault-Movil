@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Image,  Alert, } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
+import { View, Text, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Image, Alert, } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import Input from "../../../shared/components/common/Input";
 import Button from "../../../shared/components/common/Button";
 import { COLORS, FONT_TYPE, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme";
-import { ArrowLeft, Camera, ShieldCheck, ChevronRight, User} from "lucide-react-native";
+import { ArrowLeft, Camera, ShieldCheck, ChevronRight, User } from "lucide-react-native";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 
 const RegisterScreen = ({ navigation }) => {
@@ -24,10 +26,40 @@ const RegisterScreen = ({ navigation }) => {
         }
     });
 
-    const handleSelectImage = () => {
-        Alert.Alert("Aquí puedes integrar expo-image-picker o react-native-image-picker para seleccionar tu foto.");
-    };
+    const handleSelectImage = async () => {
+        if (Platform.OS !== "web") {
+            const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (!permissionResult.granted) {
+                Alert.alert("Permiso requerido", "Se necesita acceso a la galería para elegir tu foto.");
+                return;
+            }
+        }
 
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ["images"],
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.7,
+        });
+
+        if (!result.canceled && result.assets?.length > 0) {
+            const pickedUri = result.assets[0].uri;
+
+            if (Platform.OS === "web") {
+                setImageUri(pickedUri);
+                return;
+            }
+
+            const ext = pickedUri.split(".").pop()?.toLowerCase() || "jpg";
+            const cacheUri = `${FileSystem.cacheDirectory}register_avatar.${ext}`;
+            try {
+                await FileSystem.copyAsync({ from: pickedUri, to: cacheUri });
+                setImageUri(cacheUri);
+            } catch {
+                setImageUri(pickedUri);
+            }
+        }
+    };
     const onSubmit = async (data) => {
         try {
             const formData = new FormData();
@@ -38,6 +70,28 @@ const RegisterScreen = ({ navigation }) => {
             formData.append("password", data.userPassword);
             formData.append("confirmPassword", data.confirmPassword);
             formData.append("phone", data.userCel);
+
+            if (imageUri) {
+                if (Platform.OS === "web") {
+                    const fetched = await fetch(imageUri);
+                    const blob = await fetched.blob();
+                    const ext = blob.type.split("/")[1] || "jpg";
+                    formData.append("profilePicture", blob, `profile.${ext}`);
+                } else {
+                    const filename = imageUri.split("/").pop() || "profile.jpg";
+                    const ext = imageUri.split(".").pop()?.toLowerCase() || "jpg";
+                    const mimeType =
+                        ext === "png" ? "image/png" :
+                            ext === "webp" ? "image/webp" :
+                                ext === "avif" ? "image/avif" : "image/jpeg";
+                    formData.append("profilePicture", {
+                        uri: imageUri,
+                        type: mimeType,
+                        name: filename,
+                    });
+                }
+            }
+
             await handleRegister(formData);
             Alert.alert("Éxito", "Registro exitoso. Revisa tu correo para verificar tu cuenta.");
             navigation.navigate("VerifyEmail");
@@ -45,7 +99,6 @@ const RegisterScreen = ({ navigation }) => {
             Alert.alert("Error", error.response?.data?.message || "Error al registrarse");
         }
     };
-
     const styles = StyleSheet.create({
         container: {
             flex: 1,
