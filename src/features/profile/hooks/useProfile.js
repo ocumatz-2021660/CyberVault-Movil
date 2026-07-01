@@ -23,9 +23,7 @@ export const useProfile = () => {
         try {
             setLoading(true);
             setError(null);
-            const response = await authClient.put("/profile", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
+            const response = await authClient.put("/profile", formData);
             return response.data;
         } catch (err) {
             setError(err.response?.data?.message || "Error al actualizar perfil");
