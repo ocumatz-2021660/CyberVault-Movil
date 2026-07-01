@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react"
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Platform, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Landmark, Send, HandCoins, PiggyBank, Ticket } from "lucide-react-native";
+import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Stars, Landmark, Send, HandCoins, PiggyBank, Ticket } from "lucide-react-native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme"
 import { useAuthStore } from "../../../shared/store/authStore"
 import { useCurrency } from "../../../shared/hooks/useCurrency"
@@ -424,6 +424,7 @@ const DashboardAccountScreen = () => {
                                     </Text>
                                     <View style={styles.servicePointsBadge}>
                                         <Text style={styles.servicePointsText}>
+                                            <Stars size={12} fill={COLORS.primary_yellow} color={COLORS.text_primary} />
                                             {servicio.puntos_requeridos} pts
                                         </Text>
                                     </View>

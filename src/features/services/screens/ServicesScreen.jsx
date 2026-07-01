@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, ActivityIndicator, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from "react-native";
-import { Gift, CheckCircle, Award, ArrowLeft, PiggyBank, Wallet, Ticket, CircleCheck, CircleX } from "lucide-react-native";
+import { Gift, CheckCircle, Award, ArrowLeft, PiggyBank, Wallet, Ticket, CircleCheck, CircleX, Stars } from "lucide-react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme";
@@ -461,7 +461,8 @@ const ServiceScreen = () => {
                                     <View style={styles.serviceFooter}>
                                         <View style={styles.servicePointsBadge}>
                                             <Text style={styles.servicePointsText}>
-                                                {servicio.puntos_requeridos} pts
+                                                <Stars size={12} fill={COLORS.primary_yellow} color={COLORS.text_primary}/>
+                                                  {servicio.puntos_requeridos} pts
                                             </Text>
                                         </View>
                                         <TouchableOpacity
