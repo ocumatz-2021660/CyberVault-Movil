@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react"
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Platform, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Stars, Landmark, Send, HandCoins, PiggyBank, Ticket } from "lucide-react-native";
+import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Stars, Landmark, Send, HandCoins, PiggyBank, Ticket, LogOut } from "lucide-react-native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme"
 import { useAuthStore } from "../../../shared/store/authStore"
 import { useCurrency } from "../../../shared/hooks/useCurrency"
@@ -10,6 +10,7 @@ import Button from "../../../shared/components/common/Button"
 
 const DashboardAccountScreen = () => {
     const user = useAuthStore((state) => state.user);
+    const logout = useAuthStore((state) => state.logout);
     const { formatConverted, loading: rateLoading } = useCurrency();
     const { fetchMisCuentas, fetchServiciosActivos, loading } = useDashboard();
     const navigation = useNavigation();
@@ -281,6 +282,24 @@ const DashboardAccountScreen = () => {
         solicitarButton: {
             marginTop: SPACING.md,
         },
+        logoutButton: {
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: COLORS.surface,
+            borderRadius: SPACING.md,
+            padding: SPACING.lg,
+            marginBottom: SPACING.xl,
+            gap: SPACING.sm,
+            borderWidth: 1,
+            borderColor: COLORS.error + "30",
+            ...SHADOWS.containerCard,
+        },
+        logoutText: {
+            fontSize: FONT_SIZE.md,
+            fontWeight: "700",
+            color: COLORS.error,
+        },
     });
 
     return (
@@ -446,6 +465,14 @@ const DashboardAccountScreen = () => {
                         </View>
                     )}
                 </View>
+                <TouchableOpacity
+                    style={styles.logoutButton}
+                    onPress={logout}
+                    activeOpacity={0.7}
+                >
+                    <LogOut size={22} color={COLORS.error} />
+                    <Text style={styles.logoutText}>Cerrar Sesión</Text>
+                </TouchableOpacity>
             </ScrollView>
         </KeyboardAvoidingView>
     )
