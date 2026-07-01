@@ -80,7 +80,6 @@ const ProfileScreen = ({ navigation }) => {
             const pickedUri = result.assets[0].uri;
 
             if (Platform.OS === "web") {
-                // En web el uri (blob:) ya es usable directamente, no hay que copiarlo
                 setImageUri(pickedUri);
                 return;
             }
@@ -96,40 +95,50 @@ const ProfileScreen = ({ navigation }) => {
         }
     };
 
-    const onSubmit = async (data) => {
-        try {
-            setSaving(true);
+const onSubmit = async (data) => {
+    try {
+        setSaving(true);
 
-            const formData = new FormData();
-            formData.append("name", data.name.trim());
-            formData.append("surname", data.surname.trim());
-            formData.append("username", data.username.trim());
-            formData.append("phone", data.phone.trim());
+        const formData = new FormData();
+        formData.append("name", data.name.trim());
+        formData.append("surname", data.surname.trim());
+        formData.append("username", data.username.trim());
+        formData.append("phone", data.phone.trim());
 
-            if (imageUri) {
+        if (imageUri) {
+            if (Platform.OS === "web") {
+                const fetched = await fetch(imageUri);
+                const blob = await fetched.blob();
+                const ext = blob.type.split("/")[1] || "jpg";
+                formData.append("profilePicture", blob, `profile.${ext}`);
+            } else {
                 const filename = imageUri.split("/").pop() || "profile.jpg";
                 const ext = imageUri.split(".").pop()?.toLowerCase() || "jpg";
-                const mimeType = ext === "png" ? "image/png" : ext === "webp" ? "image/webp" : ext === "avif" ? "image/avif" : "image/jpeg";
+                const mimeType =
+                    ext === "png" ? "image/png" :
+                    ext === "webp" ? "image/webp" :
+                    ext === "avif" ? "image/avif" : "image/jpeg";
                 formData.append("profilePicture", {
                     uri: imageUri,
                     type: mimeType,
                     name: filename,
                 });
             }
-
-            const result = await updateProfile(formData);
-
-            await login(token, result.data);
-            setProfile(result.data);
-            setModalVisible(false);
-            setImageUri(null);
-            Alert.alert("Éxito", "Perfil actualizado correctamente");
-        } catch (err) {
-            Alert.alert("Error", err.response?.data?.message || "Error al actualizar perfil");
-        } finally {
-            setSaving(false);
         }
-    };
+
+        const result = await updateProfile(formData);
+
+        await login(token, result.data);
+        setProfile(result.data);
+        setModalVisible(false);
+        setImageUri(null);
+        Alert.alert("Éxito", "Perfil actualizado correctamente");
+    } catch (err) {
+        Alert.alert("Error", err.response?.data?.message || "Error al actualizar perfil");
+    } finally {
+        setSaving(false);
+    }
+};
 
 
     const styles = StyleSheet.create({
