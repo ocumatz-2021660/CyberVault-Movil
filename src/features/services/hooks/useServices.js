@@ -35,7 +35,22 @@ export const useServices = () => {
         }
     };
 
-
+    const canjearServicio = async ({ cuenta_canje, servicio_canje }) => {
+        try {
+            setLoading(true);
+            setError(null);
+            const response = await pointsClient.post("/redeem_services/redeem", {
+                cuenta_canje,
+                servicio_canje,
+            });
+            return response.data;
+        } catch (err) {
+            setError(err.response?.data?.message || "Error al canjear el servicio");
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return {
         fetchServicios,
