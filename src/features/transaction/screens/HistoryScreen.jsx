@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, ActivityIndicator } from "react-native";
-import { ArrowLeft, Trash2, Clock, CheckCircle, XCircle } from "lucide-react-native";
+import { ArrowLeft, Trash2, Clock, CheckCircle, XCircle, StarIcon } from "lucide-react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme";
 import { useAuthStore } from "../../../shared/store/authStore";
@@ -190,7 +190,7 @@ const HistoryScreen = () => {
             marginTop: SPACING.xl,
         },
         trxCard: {
-            backgroundColor: COLORS.surface,
+            backgroundColor: COLORS.primary_dark,
             borderRadius: SPACING.sm,
             padding: SPACING.md,
             marginBottom: SPACING.sm,
@@ -203,12 +203,12 @@ const HistoryScreen = () => {
         trxId: {
             fontSize: FONT_SIZE.xs,
             fontWeight: "700",
-            color: COLORS.primary,
+            color: COLORS.surface,
             marginBottom: 2
         },
         trxDetail: {
             fontSize: FONT_SIZE.sm,
-            color: COLORS.text_primary,
+            color: COLORS.surface,
             marginBottom: 2
         },
         trxAmount: {
@@ -220,7 +220,7 @@ const HistoryScreen = () => {
         trxAmountIn: { color: COLORS.primary_green },
         trxMeta: {
             fontSize: FONT_SIZE.xs,
-            color: COLORS.text_secondary,
+            color: COLORS.surface,
             marginTop: 2
         },
         deleteButton: {
