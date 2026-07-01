@@ -1,15 +1,23 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { COLORS, SPACING, FONT_SIZE } from "../shared/constants/theme";
 import { useAuthStore } from "../shared/store/authStore";
 import AccountStack from "./AccountStack";
-import DashboardAccountScreen from "../features/account/screens/DashboardAccountScreen";
+import FavoritesScreen from "../features/favorites/screens/FavoritesScreen";
 import { useAuth } from "../features/auth/hooks/useAuth";
 import AppHeader from "../shared/components/common/AppHeader";
 import { LayoutDashboard, User, UserCircle, GiftIcon, TicketCheckIcon, Heart, HomeIcon } from "lucide-react-native";
 
 const Tab = createBottomTabNavigator();
+const FavoriteStackNav = createNativeStackNavigator();
+
+const FavoriteStack = () => (
+    <FavoriteStackNav.Navigator screenOptions={{ headerShown: false }}>
+        <FavoriteStackNav.Screen name="FavoritesMain" component={FavoritesScreen} />
+    </FavoriteStackNav.Navigator>
+);
 
 const MainTabs = () => {
     const styles = StyleSheet.create({
@@ -89,7 +97,7 @@ const MainTabs = () => {
             <Tab.Screen name="Home" component={AccountStack} options={{ tabBarLabel: "Inicio" }} />
             <Tab.Screen name="Canjes" component={AccountStack} options={{ tabBarLabel: "Canjes" }} />
             <Tab.Screen name="Service" component={AccountStack} options={{ tabBarLabel: "Servicios" }} />
-            <Tab.Screen name="Favorite" component={AccountStack} options={{ tabBarLabel: "Favoritos" }} />
+            <Tab.Screen name="Favorite" component={FavoriteStack} options={{ tabBarLabel: "Favoritos" }} />
         </Tab.Navigator>
     );
 };
