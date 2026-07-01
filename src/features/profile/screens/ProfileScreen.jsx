@@ -61,19 +61,30 @@ const ProfileScreen = ({ navigation }) => {
     };
 
     const handleSelectImage = async () => {
-        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (!permissionResult.granted) {
-            Alert.alert("Permiso requerido", "Se necesita acceso a la galería para cambiar la foto de perfil.");
-            return;
+        if (Platform.OS !== "web") {
+            const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (!permissionResult.granted) {
+                Alert.alert("Permiso requerido", "Se necesita acceso a la galería para cambiar la foto de perfil.");
+                return;
+            }
         }
+
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images"],
             allowsEditing: true,
             aspect: [1, 1],
             quality: 0.7,
         });
+
         if (!result.canceled && result.assets?.length > 0) {
             const pickedUri = result.assets[0].uri;
+
+            if (Platform.OS === "web") {
+                // En web el uri (blob:) ya es usable directamente, no hay que copiarlo
+                setImageUri(pickedUri);
+                return;
+            }
+
             const ext = pickedUri.split(".").pop()?.toLowerCase() || "jpg";
             const cacheUri = `${FileSystem.cacheDirectory}profile_upload.${ext}`;
             try {
