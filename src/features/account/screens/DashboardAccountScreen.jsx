@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react"
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Platform, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Landmark, Send, HandCoins, PiggyBank } from "lucide-react-native";
+import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Landmark, Send, HandCoins, PiggyBank, Ticket } from "lucide-react-native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme"
 import { useAuthStore } from "../../../shared/store/authStore"
 import { useCurrency } from "../../../shared/hooks/useCurrency"
@@ -410,7 +410,7 @@ const DashboardAccountScreen = () => {
                     ) : errorServicios ? (
                         <Text style={styles.errorText}>{errorServicios}</Text>
                     ) : servicios.length > 0 ? (
-                        servicios.map((servicio) => (
+                        servicios.slice(0, 2).map((servicio) => (
                             <View key={servicio._id} style={styles.serviceCard}>
                                 <View style={styles.serviceIconContainer}>
                                     <Gift size={22} color={COLORS.primary} />
@@ -426,6 +426,11 @@ const DashboardAccountScreen = () => {
                                         </Text>
                                     </View>
                                 </View>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate("Home", { screen: "Services" })}
+                                >
+                                    <Ticket size={20} color={COLORS.primary} />
+                                </TouchableOpacity>
                             </View>
                         ))
                     ) : (
