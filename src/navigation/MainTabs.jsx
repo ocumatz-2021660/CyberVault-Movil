@@ -10,10 +10,12 @@ import ServiceScreen from "../features/services/screens/ServicesScreen";
 import { useAuth } from "../features/auth/hooks/useAuth";
 import AppHeader from "../shared/components/common/AppHeader";
 import { LayoutDashboard, User, UserCircle, GiftIcon, TicketCheckIcon, Heart, HomeIcon } from "lucide-react-native";
+import CanjesScreen from "../features/canje/screens/CanjeScreen"
 
 const Tab = createBottomTabNavigator();
 const FavoriteStackNav = createNativeStackNavigator();
 const ServiceStackNav = createNativeStackNavigator();
+const CanjeStackNav = createNativeStackNavigator();
 
 const FavoriteStack = () => (
     <FavoriteStackNav.Navigator screenOptions={{ headerShown: false }}>
@@ -25,6 +27,12 @@ const ServiceStack = () => (
     <ServiceStackNav.Navigator screenOptions={{ headerShown: false }}>
         <ServiceStackNav.Screen name="ServiceMain" component={ServiceScreen} />
     </ServiceStackNav.Navigator>
+);
+
+const CanjeStack = () => (
+    <CanjeStackNav.Navigator screenOptions={{ headerShown: false }}>
+        <CanjeStackNav.Screen name="CanjesMain" component={CanjesScreen} />
+    </CanjeStackNav.Navigator>
 );
 
 const MainTabs = () => {
@@ -58,7 +66,7 @@ const MainTabs = () => {
             })}
         >
             <Tab.Screen name="Home" component={AccountStack} options={{ tabBarLabel: "Inicio" }} />
-            <Tab.Screen name="Canjes" component={AccountStack} options={{ tabBarLabel: "Canjes" }} />
+            <Tab.Screen name="Canjes" component={CanjeStack} options={{ tabBarLabel: "Canjes" }} />
             <Tab.Screen name="Service" component={ServiceStack} options={{ tabBarLabel: "Servicios" }} />
             <Tab.Screen name="Favorite" component={FavoriteStack} options={{ tabBarLabel: "Favoritos" }} />
         </Tab.Navigator>
