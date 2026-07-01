@@ -228,6 +228,8 @@ const DashboardAccountScreen = () => {
             borderRadius: SPACING.sm,
             padding: SPACING.md,
             marginBottom: SPACING.sm,
+            borderRightWidth: 2,
+            borderTopColor: COLORS.primary,
             ...SHADOWS.containerCard,
         },
         serviceIconContainer: {
