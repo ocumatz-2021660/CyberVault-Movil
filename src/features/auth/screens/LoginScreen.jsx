@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Platform, ScrollView, Alert } from "react-native"
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Platform, ScrollView } from "react-native"
 import { ArrowRight, Mail, Subtitles, Wallet, Lock } from "lucide-react-native"
 import { useForm, Controller } from 'react-hook-form'
 import Button from "../../../shared/components/common/Button";
 import Input from "../../../shared/components/common/Input";
 import { COLORS, SPACING, FONT_SIZE, FONT_TYPE, SHADOWS} from "../../../shared/constants/theme";
 import { useAuth } from "../hooks/useAuth";
+import { useNotificationStore } from "../../../shared/store/notificationStore";
 
 const LoginScreen = ({ navigation }) => {
 
     const { handleLogin, loading } = useAuth();
+    const showNotification = useNotificationStore((state) => state.showNotification);
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
@@ -22,7 +24,10 @@ const LoginScreen = ({ navigation }) => {
         try {
             await handleLogin(data);
         } catch (error) {
-            Alert.alert("Error", error.response?.data?.message || "Credenciales inválidas");
+            showNotification({
+                message: error.response?.data?.message || "Credenciales inválidas",
+                type: "error",
+            });
         }
     }
 
