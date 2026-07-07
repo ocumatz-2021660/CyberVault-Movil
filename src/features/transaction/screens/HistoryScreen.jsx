@@ -1,18 +1,20 @@
 import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, ActivityIndicator } from "react-native";
-import { ArrowLeft, Trash2, Clock, CheckCircle, XCircle, StarIcon } from "lucide-react-native";
+import { ArrowLeft, Trash2, Clock, XCircle } from "lucide-react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme";
 import { useAuthStore } from "../../../shared/store/authStore";
 import { useCurrency } from "../../../shared/hooks/useCurrency";
 import { useHistory } from "../hook/useHistory";
 import accountClient from "../../../shared/api/accountClient";
+import { useNotificationStore } from "../../../shared/store/notificationStore";
 
 const HistoryScreen = () => {
     const navigation = useNavigation();
     const user = useAuthStore((state) => state.user);
     const { formatConverted } = useCurrency();
     const { fetchHistory, deleteTransaction } = useHistory();
+    const showNotification = useNotificationStore((state) => state.showNotification);
 
     const [cuentas, setCuentas] = useState([]);
     const [selectedCuenta, setSelectedCuenta] = useState(null);
@@ -79,7 +81,8 @@ const HistoryScreen = () => {
         try {
             await deleteTransaction(modalTransaction._id);
             setTransactions(prev => prev.filter(t => t._id !== modalTransaction._id));
-            setModalState("success");
+            showNotification({ message: "Transacción cancelada exitosamente", type: "warning" });
+            closeModal();
         } catch (err) {
             setModalMessage(err?.response?.data?.message || "No se pudo cancelar la transacción");
             setModalState("error");
@@ -324,27 +327,6 @@ const HistoryScreen = () => {
                         <ActivityIndicator size="large" color={COLORS.primary} style={styles.modalIcon} />
                         <Text style={styles.modalTitle}>Cancelando...</Text>
                         <Text style={styles.modalMessage}>Procesando la cancelación de la transacción</Text>
-                    </>
-                );
-
-            case "success":
-                return (
-                    <>
-                        <CheckCircle size={48} color={COLORS.primary_green} style={styles.modalIcon} />
-                        <Text style={styles.modalTitle}>Transacción cancelada</Text>
-                        <Text style={styles.modalMessage}>La transacción fue cancelada exitosamente.</Text>
-                        <TouchableOpacity
-                            style={[styles.modalButtonFull, {
-                                backgroundColor: COLORS.primary,
-                                borderRadius: SPACING.sm, padding: SPACING.md,
-                                alignItems: "center",
-                            }]}
-                            onPress={closeModal}
-                        >
-                            <Text style={{ fontSize: FONT_SIZE.sm, fontWeight: "700", color: COLORS.surface }}>
-                                Aceptar
-                            </Text>
-                        </TouchableOpacity>
                     </>
                 );
 

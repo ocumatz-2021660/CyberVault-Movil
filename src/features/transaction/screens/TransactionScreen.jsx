@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, KeyboardAvoidingView, Platform } from "react-native";
-import { Send, CheckCircle, ArrowLeft, ChevronDown, ChevronUp } from "lucide-react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
+import { Send, ArrowLeft, ChevronDown, ChevronUp } from "lucide-react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useFocusEffect } from "@react-navigation/native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme";
@@ -11,6 +11,7 @@ import Button from "../../../shared/components/common/Button";
 import { useNavigation } from "@react-navigation/native";
 import accountClient from "../../../shared/api/accountClient";
 import { useCurrency } from "../../../shared/hooks/useCurrency";
+import { useNotificationStore } from "../../../shared/store/notificationStore";
 
 const TransactionScreen = () => {
     const navigation = useNavigation();
@@ -20,9 +21,8 @@ const TransactionScreen = () => {
     const [cuentas, setCuentas] = useState([]);
     const [favoritos, setFavoritos] = useState([]);
     const [showFavoritos, setShowFavoritos] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [successData, setSuccessData] = useState(null);
     const [serverError, setServerError] = useState(null);
+    const showNotification = useNotificationStore((state) => state.showNotification);
 
     const { control, handleSubmit, formState: { errors }, setValue, watch } = useForm({
         defaultValues: { cuenta_origen: "", cuenta_destinatoria: "", monto: "" },
@@ -54,22 +54,17 @@ const TransactionScreen = () => {
         setServerError(null);
         try {
             const montoGTQ = toBase(Number(data.monto));
-            const result = await crearTransaccion({
+            await crearTransaccion({
                 monto: montoGTQ,
                 tipo_transaccion: "TRANSFERENCIA",
                 cuenta_origen: data.cuenta_origen,
                 cuenta_destinatoria: data.cuenta_destinatoria,
             });
-            setSuccessData(result);
-            setShowSuccess(true);
+            showNotification({ message: "Transferencia realizada con éxito", type: "success" });
+            navigation.goBack();
         } catch (err) {
             setServerError(err.response?.data?.message || "Error al realizar la transferencia");
         }
-    };
-
-    const handleGoBack = () => {
-        setShowSuccess(false);
-        navigation.goBack();
     };
 
     const selectFavorito = (fav) => {
@@ -136,14 +131,6 @@ const TransactionScreen = () => {
         errorBanner: { backgroundColor: COLORS.light_error, padding: SPACING.md, borderRadius: SPACING.sm, marginBottom: SPACING.md },
         errorBannerText: { color: COLORS.error, fontSize: FONT_SIZE.sm, fontWeight: "600", textAlign: "center" },
         submitButton: { marginTop: SPACING.sm, marginBottom: SPACING.xl },
-        modalOverlay: { flex: 1, backgroundColor: "rgba(0,0,0,0.5)", justifyContent: "center", alignItems: "center", padding: SPACING.xl },
-        modalContent: {
-            backgroundColor: COLORS.surface, borderRadius: SPACING.lg, padding: SPACING.xl,
-            alignItems: "center", width: "100%", maxWidth: 340, ...SHADOWS.md,
-        },
-        modalTitle: { fontSize: FONT_SIZE.xl, fontWeight: "800", color: COLORS.text_primary, marginTop: SPACING.lg, marginBottom: SPACING.sm },
-        modalMessage: { fontSize: FONT_SIZE.sm, color: COLORS.text_secondary, textAlign: "center", lineHeight: 22, marginBottom: SPACING.lg },
-        modalButton: { width: "100%" },
     });
 
     return (
@@ -276,18 +263,6 @@ const TransactionScreen = () => {
                 />
             </ScrollView>
 
-            <Modal visible={showSuccess} transparent animationType="fade">
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContent}>
-                        <CheckCircle size={64} color={COLORS.primary} />
-                        <Text style={styles.modalTitle}>Transferencia Exitosa</Text>
-                        <Text style={styles.modalMessage}>
-                            Se transfirieron {formatConverted(successData?.data?.monto)} exitosamente.
-                        </Text>
-                        <Button title="Ir al Dashboard" onPress={handleGoBack} variant="primary" style={styles.modalButton} />
-                    </View>
-                </View>
-            </Modal>
         </KeyboardAvoidingView>
     );
 };
