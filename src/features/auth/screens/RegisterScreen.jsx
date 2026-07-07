@@ -14,7 +14,7 @@ const RegisterScreen = ({ navigation }) => {
     const { handleRegister, loading } = useAuth();
     const [imageUri, setImageUri] = useState(null);
 
-    const { control, handleSubmit, watch, formState: { errors } } = useForm({
+    const { control, handleSubmit, watch, setError, formState: { errors } } = useForm({
         defaultValues: {
             firstName: '',
             lastName: '',
@@ -96,7 +96,27 @@ const RegisterScreen = ({ navigation }) => {
             Alert.alert("Éxito", "Registro exitoso. Revisa tu correo para verificar tu cuenta.");
             navigation.navigate("VerifyEmail");
         } catch (error) {
-            Alert.alert("Error", error.response?.data?.message || "Error al registrarse");
+            const res = error.response;
+            if (res?.status === 400 && res.data?.errors) {
+                const fieldMap = {
+                    name: "firstName",
+                    surname: "lastName",
+                    username: "userName",
+                    email: "userEmail",
+                    phone: "userCel",
+                    password: "userPassword",
+                    confirmPassword: "confirmPassword",
+                };
+                res.data.errors.forEach((err) => {
+                    const field = fieldMap[err.field];
+                    if (field) setError(field, { message: err.message });
+                });
+            } else if (res?.status === 409) {
+                setError("userEmail", { message: "Este correo o usuario ya está registrado" });
+                setError("userName", { message: "Este correo o usuario ya está registrado" });
+            } else {
+                Alert.alert("Error", res?.data?.message || "Error al registrarse");
+            }
         }
     };
     const styles = StyleSheet.create({
@@ -311,7 +331,14 @@ const RegisterScreen = ({ navigation }) => {
                             <View style={styles.inputHalf}>
                                 <Controller
                                     control={control}
-                                    rules={{ required: "Campo obligatorio" }}
+                                    rules={{
+                                        required: "Campo obligatorio",
+                                        validate: (value) => {
+                                            if (value.length > 25) return "Máximo 25 caracteres";
+                                            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value)) return "Solo letras y espacios";
+                                            return true;
+                                        },
+                                    }}
                                     render={({ field: { onChange, value, onBlur } }) => (
                                         <Input
                                             label="NOMBRES"
@@ -328,7 +355,14 @@ const RegisterScreen = ({ navigation }) => {
                             <View style={styles.inputHalf}>
                                 <Controller
                                     control={control}
-                                    rules={{ required: "Campo obligatorio" }}
+                                    rules={{
+                                        required: "Campo obligatorio",
+                                        validate: (value) => {
+                                            if (value.length > 25) return "Máximo 25 caracteres";
+                                            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value)) return "Solo letras y espacios";
+                                            return true;
+                                        },
+                                    }}
                                     render={({ field: { onChange, value, onBlur } }) => (
                                         <Input
                                             label="APELLIDOS"
@@ -345,9 +379,17 @@ const RegisterScreen = ({ navigation }) => {
                         </View>
 
                         <View style={styles.inputFull}>
-                            <Controller
+                                <Controller
                                 control={control}
-                                rules={{ required: "Campo obligatorio" }}
+                                rules={{
+                                    required: "Campo obligatorio",
+                                    validate: (value) => {
+                                        if (value.length < 3) return "Mínimo 3 caracteres";
+                                        if (value.length > 50) return "Máximo 50 caracteres";
+                                        if (!/^[a-zA-Z0-9_.-]+$/.test(value)) return "Solo letras, números, puntos, guiones y guión bajo";
+                                        return true;
+                                    },
+                                }}
                                 render={({ field: { onChange, value, onBlur } }) => (
                                     <Input
                                         label="NOMBRE DE USUARIO"
@@ -363,11 +405,15 @@ const RegisterScreen = ({ navigation }) => {
                         </View>
 
                         <View style={styles.inputFull}>
-                            <Controller
+                                <Controller
                                 control={control}
                                 rules={{
                                     required: "Campo obligatorio",
-                                    pattern: { value: /^\S+@\S+$/i, message: "Correo inválido" }
+                                    validate: (value) => {
+                                        if (value.length > 150) return "Máximo 150 caracteres";
+                                        if (!/^\S+@\S+\.\S+$/.test(value)) return "Correo inválido";
+                                        return true;
+                                    },
                                 }}
                                 render={({ field: { onChange, value, onBlur } }) => (
                                     <Input
@@ -385,9 +431,12 @@ const RegisterScreen = ({ navigation }) => {
                         </View>
 
                         <View style={styles.inputFull}>
-                            <Controller
+                                <Controller
                                 control={control}
-                                rules={{ required: "Campo obligatorio" }}
+                                rules={{
+                                    required: "Campo obligatorio",
+                                    validate: (value) => /^\d{8}$/.test(value) || "Debe tener exactamente 8 dígitos",
+                                }}
                                 render={({ field: { onChange, value, onBlur } }) => (
                                     <Input
                                         label="TELÉFONO"
@@ -396,6 +445,7 @@ const RegisterScreen = ({ navigation }) => {
                                         onChangeText={onChange}
                                         onBlur={onBlur}
                                         keyboardType="phone-pad"
+                                        maxLength={8}
                                         error={errors.userCel?.message}
                                     />
                                 )}
@@ -407,7 +457,10 @@ const RegisterScreen = ({ navigation }) => {
                             <View style={styles.inputHalf}>
                                 <Controller
                                     control={control}
-                                    rules={{ required: "Campo obligatorio" }}
+                                    rules={{
+                                        required: "Campo obligatorio",
+                                        validate: (value) => value.length >= 8 || "Mínimo 8 caracteres",
+                                    }}
                                     render={({ field: { onChange, value, onBlur } }) => (
                                         <Input
                                             label="CONTRASEÑA"
