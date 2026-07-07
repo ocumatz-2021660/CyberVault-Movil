@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react"
 import { View, Text, StyleSheet, KeyboardAvoidingView, ScrollView, Platform, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Stars, Landmark, Send, HandCoins, PiggyBank, Ticket, LogOut } from "lucide-react-native";
+import { Wallet, ArrowRight, ArrowUpFromLine, History, Gift, Plus, Landmark, Send, HandCoins, PiggyBank } from "lucide-react-native";
 import { COLORS, FONT_SIZE, SHADOWS, SPACING } from "../../../shared/constants/theme"
 import { useAuthStore } from "../../../shared/store/authStore"
 import { useCurrency } from "../../../shared/hooks/useCurrency"
@@ -10,7 +10,6 @@ import Button from "../../../shared/components/common/Button"
 
 const DashboardAccountScreen = () => {
     const user = useAuthStore((state) => state.user);
-    const logout = useAuthStore((state) => state.logout);
     const { formatConverted, loading: rateLoading } = useCurrency();
     const { fetchMisCuentas, fetchServiciosActivos, loading } = useDashboard();
     const navigation = useNavigation();
@@ -229,8 +228,6 @@ const DashboardAccountScreen = () => {
             borderRadius: SPACING.sm,
             padding: SPACING.md,
             marginBottom: SPACING.sm,
-            borderRightWidth: 2,
-            borderTopColor: COLORS.primary,
             ...SHADOWS.containerCard,
         },
         serviceIconContainer: {
@@ -281,24 +278,6 @@ const DashboardAccountScreen = () => {
         },
         solicitarButton: {
             marginTop: SPACING.md,
-        },
-        logoutButton: {
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: COLORS.surface,
-            borderRadius: SPACING.md,
-            padding: SPACING.lg,
-            marginBottom: SPACING.xl,
-            gap: SPACING.sm,
-            borderWidth: 1,
-            borderColor: COLORS.error + "30",
-            ...SHADOWS.containerCard,
-        },
-        logoutText: {
-            fontSize: FONT_SIZE.md,
-            fontWeight: "700",
-            color: COLORS.error,
         },
     });
 
@@ -391,7 +370,7 @@ const DashboardAccountScreen = () => {
                             </View>
                             <Text style={styles.actionLabel}>Transferir</Text>
                         </TouchableOpacity>
-
+                        {/* Eliminacion temporal
                         <TouchableOpacity
                             style={styles.actionButton}
                             onPress={() => navigation.navigate("Withdrawal")}
@@ -402,7 +381,7 @@ const DashboardAccountScreen = () => {
                             </View>
                             <Text style={styles.actionLabel}>Retirar</Text>
                         </TouchableOpacity>
-
+                        */}
                         <TouchableOpacity style={styles.actionButton}
                             onPress={() => navigation.navigate("History")}
                             activeOpacity={0.7}>
@@ -431,7 +410,7 @@ const DashboardAccountScreen = () => {
                     ) : errorServicios ? (
                         <Text style={styles.errorText}>{errorServicios}</Text>
                     ) : servicios.length > 0 ? (
-                        servicios.slice(0, 2).map((servicio) => (
+                        servicios.map((servicio) => (
                             <View key={servicio._id} style={styles.serviceCard}>
                                 <View style={styles.serviceIconContainer}>
                                     <Gift size={22} color={COLORS.primary} />
@@ -443,16 +422,10 @@ const DashboardAccountScreen = () => {
                                     </Text>
                                     <View style={styles.servicePointsBadge}>
                                         <Text style={styles.servicePointsText}>
-                                            <Stars size={12} fill={COLORS.primary_yellow} color={COLORS.text_primary} />
                                             {servicio.puntos_requeridos} pts
                                         </Text>
                                     </View>
                                 </View>
-                                <TouchableOpacity
-                                    onPress={() => navigation.navigate("Home", { screen: "Services" })}
-                                >
-                                    <Ticket size={20} color={COLORS.primary} />
-                                </TouchableOpacity>
                             </View>
                         ))
                     ) : (
@@ -465,14 +438,6 @@ const DashboardAccountScreen = () => {
                         </View>
                     )}
                 </View>
-                <TouchableOpacity
-                    style={styles.logoutButton}
-                    onPress={logout}
-                    activeOpacity={0.7}
-                >
-                    <LogOut size={22} color={COLORS.error} />
-                    <Text style={styles.logoutText}>Cerrar Sesión</Text>
-                </TouchableOpacity>
             </ScrollView>
         </KeyboardAvoidingView>
     )
