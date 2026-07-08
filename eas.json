@@ -9,13 +9,20 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
-    },
-    "env": {
-
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_AUTH_URL": "https://sistema-bancario-auth-5zkq.onrender.com/api/v1/auth",
+        "EXPO_PUBLIC_ACCOUNT_URL": "https://sistema-bancario-account.onrender.com/api/v1",
+        "EXPO_PUBLIC_POINTS_URL": "https://sistema-bancario-points.onrender.com/api/v1"
+      }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_AUTH_URL": "https://sistema-bancario-auth-5zkq.onrender.com/api/v1/auth",
+        "EXPO_PUBLIC_ACCOUNT_URL": "https://sistema-bancario-account.onrender.com/api/v1",
+        "EXPO_PUBLIC_POINTS_URL": "https://sistema-bancario-points.onrender.com/api/v1"
+      }
     }
   },
   "submit": {
