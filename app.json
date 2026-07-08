@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "CyberVault-Movil",
-    "slug": "CyberVault-Movil",
+    "slug": "cybervault-movil",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +24,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d60c0531-de8f-4cdc-a373-7d3e45c67465"
+      }
+    },
+    "owner": "ocumatz-2021660s-organization"
   }
 }
