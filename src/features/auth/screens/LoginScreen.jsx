@@ -47,11 +47,13 @@ const LoginScreen = ({ navigation }) => {
             gap: 10,
         },
         logo: {
-            padding: 15,
-            maginBotton: SPACING.sm,
-            color: COLORS.surface,
-            backgroundColor: COLORS.primary,
+            width: 70,
+            height: 70,
             borderRadius: 15,
+            backgroundColor: COLORS.primary,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: SPACING.sm,
         },
         subtitle: {
             fontSize: FONT_SIZE.lg,
@@ -114,7 +116,9 @@ const LoginScreen = ({ navigation }) => {
             <ScrollView contentContainerStyle={styles.scrollContent}>
 
                 <View style={styles.header}>
-                    <Wallet style={styles.logo} size={40} />
+                    <View style={styles.logo}>
+                        <Wallet size={40} color={COLORS.surface} />
+                    </View>
                     <View>
                         <Text style={[styles.subtitle, { color: COLORS.text_primary }]}>CYBER
                             <Text style={[styles.subtitle, { color: COLORS.primary }]}>VAULT</Text>

@@ -252,7 +252,7 @@ const ServiceScreen = () => {
             ...SHADOWS.md,
         },
         modalScroll: {
-            maxHeight: 500,
+            maxHeight: "90%",
         },
         modalHeader: {
             alignItems: "center",
@@ -493,7 +493,7 @@ const ServiceScreen = () => {
                 <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
                     <View style={styles.modalOverlay}>
                         <TouchableWithoutFeedback onPress={() => { }}>
-                            <ScrollView style={styles.modalScroll} contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}>
+                            <ScrollView style={styles.modalScroll} contentContainerStyle={{ flexGrow: 1 }}>
                                 <View style={styles.modalContent}>
                                     <View style={styles.modalHeader}>
                                         <View style={styles.modalServiceIcon}>

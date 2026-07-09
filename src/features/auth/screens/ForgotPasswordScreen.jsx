@@ -42,11 +42,13 @@ const ForgotPasswordScreen = ({ navigation }) => {
             gap: 10,
         },
         logo: {
-            padding: 15,
-            maginBotton: SPACING.sm,
-            color: COLORS.error,
-            backgroundColor: COLORS.light_error,
+            width: 70,
+            height: 70,
             borderRadius: 20,
+            backgroundColor: COLORS.light_error,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: SPACING.sm,
         },
         subtitle: {
             fontSize: FONT_SIZE.lg,
@@ -101,7 +103,9 @@ const ForgotPasswordScreen = ({ navigation }) => {
             <ScrollView contentContainerStyle={styles.scrollContent}>
 
                 <View style={styles.header}>
-                    <ShieldAlert style={styles.logo} size={40} />
+                    <View style={styles.logo}>
+                        <ShieldAlert size={40} color={COLORS.error} />
+                    </View>
                     <View>
                         <Text style={[styles.subtitle, { color: COLORS.text_primary }]}>RECUPERAR
                             <Text style={[styles.subtitle, { color: COLORS.primary }]}> CLAVE</Text>

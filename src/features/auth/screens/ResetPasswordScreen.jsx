@@ -45,11 +45,13 @@ const ResetPasswordScreen = ({ navigation }) => {
             gap: 10,
         },
         logo: {
-            padding: 15,
-            marginBotton: SPACING.sm,
-            color: COLORS.primary,
-            backgroundColor: COLORS.light_primary,
+            width: 70,
+            height: 70,
             borderRadius: 20,
+            backgroundColor: COLORS.light_primary,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: SPACING.sm,
         },
         subtitle: {
             fontSize: FONT_SIZE.lg,
@@ -94,7 +96,7 @@ const ResetPasswordScreen = ({ navigation }) => {
             color: COLORS.primary_dark,
             fontWeight: "700",
             alignSelf: "flex-end",
-            marginBotton: -SPACING.xl,
+            marginBottom: -SPACING.xl,
         },
     });
 
@@ -108,7 +110,9 @@ const ResetPasswordScreen = ({ navigation }) => {
             <ScrollView contentContainerStyle={styles.scrollContent}>
 
                 <View style={styles.header}>
-                    <LockKeyhole style={styles.logo} size={40} />
+                    <View style={styles.logo}>
+                        <LockKeyhole size={40} color={COLORS.primary} />
+                    </View>
 
                     <View>
                         <Text style={[styles.subtitle, { color: COLORS.text_primary }]}>NUEVA

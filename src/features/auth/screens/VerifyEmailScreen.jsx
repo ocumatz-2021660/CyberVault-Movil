@@ -43,11 +43,13 @@ const VerifyEmailScreen = ({ navigation }) => {
             gap: 15,
         },
         logo: {
-            padding: 15,
-            maginBotton: SPACING.sm,
-            color: COLORS.primary,
-            backgroundColor: COLORS.light_primary,
+            width: 70,
+            height: 70,
             borderRadius: 15,
+            backgroundColor: COLORS.light_primary,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: SPACING.sm,
         },
         subtitle: {
             fontSize: FONT_SIZE.lg,
@@ -111,7 +113,9 @@ const VerifyEmailScreen = ({ navigation }) => {
             <ScrollView contentContainerStyle={styles.scrollContent}>
 
                 <View style={styles.header}>
-                    <MailCheck style={styles.logo} size={40} />
+                    <View style={styles.logo}>
+                        <MailCheck size={40} color={COLORS.primary} />
+                    </View>
                     <View>
                         <Text style={[styles.subtitle, { color: COLORS.text_primary }]}>VERIFIQUE SU
                             <Text style={[styles.subtitle, { color: COLORS.primary }]}> CUENTA</Text>
