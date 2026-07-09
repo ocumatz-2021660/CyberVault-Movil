@@ -4,6 +4,7 @@ import { ENDPOINTS } from "../constants/endpoints";
 
 const pointsClient = axios.create({
     baseURL: ENDPOINTS.POINTS,
+    timeout: 15000,
     headers: {
         "Content-Type": "application/json",
     },

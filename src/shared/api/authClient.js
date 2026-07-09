@@ -4,6 +4,7 @@ import { ENDPOINTS } from "../constants/endpoints";
 
 const authClient = axios.create({
     baseURL: ENDPOINTS.AUTH,
+    timeout: 15000,
 });
 
 authClient.interceptors.request.use(async (config) => {

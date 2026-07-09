@@ -4,6 +4,7 @@ import { ENDPOINTS } from "../constants/endpoints";
 
 const accountClient = axios.create({
     baseURL: ENDPOINTS.ACCOUNT,
+    timeout: 15000,
     headers: {
         "Content-Type": "application/json",
     },
