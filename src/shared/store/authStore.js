@@ -33,8 +33,14 @@ export const useAuthStore = create(
         {
             name: "auth-storage",
             storage: createJSONStorage(() => AsyncStorage),
-            onRehydrateStorage: () => (state) => {
-                state?.setHasHydrated(true);
+            onRehydrateStorage: () => (state, error) => {
+                if (error) {
+                    set({ _hasHydrated: true });
+                } else if (state) {
+                    state.setHasHydrated(true);
+                } else {
+                    set({ _hasHydrated: true });
+                }
             },
         },
     ),
