@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "CyberVault-Movil",
+    "name": "CyberVault",
     "slug": "cybervault-movil",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Icono_wallet.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -17,9 +17,8 @@
     "android": {
       "package": "com.cybervault.movil",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#2d6a4f",
         "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       }
     },
